@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
+  Animated,
 } from 'react-native';
 import MapView, { Marker, Region } from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -13,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
 import { useAuth } from '@/store/auth';
+import { useTripPlanningStore } from '@/store/tripPlanning';
 
 interface MapMarker {
   id: string;
@@ -37,16 +39,36 @@ const INITIAL_REGION: Region = {
 export default function HomeScreen() {
   const router = useRouter();
   const { user, isAuthenticated } = useAuth();
+  const { currentTrip } = useTripPlanningStore();
+  const mapRef = useRef<MapView>(null);
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [region, setRegion] = useState<Region>(INITIAL_REGION);
   const [markers, setMarkers] = useState<MapMarker[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
   const [activeFilters, setActiveFilters] = useState<string[]>(['all']);
+  const [expandedFilter, setExpandedFilter] = useState<string | null>(null);
 
   useEffect(() => {
     getCurrentLocation();
   }, []);
+
+  useEffect(() => {
+    // Update map location when trip is planned
+    if (currentTrip?.coordinates && mapRef.current) {
+      const newRegion = {
+        latitude: currentTrip.coordinates.latitude,
+        longitude: currentTrip.coordinates.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      };
+      setRegion(newRegion);
+      mapRef.current.animateToRegion(newRegion, 1000);
+      
+      // Load markers for the new destination
+      loadNearbyMarkers(currentTrip.coordinates.latitude, currentTrip.coordinates.longitude);
+    }
+  }, [currentTrip]);
 
   const getCurrentLocation = async () => {
     try {
@@ -71,6 +93,11 @@ export default function HomeScreen() {
       };
       
       setRegion(newRegion);
+      
+      // Animate to the new location
+      if (mapRef.current) {
+        mapRef.current.animateToRegion(newRegion, 1000);
+      }
       
       // Load nearby markers
       loadNearbyMarkers(currentLocation.coords.latitude, currentLocation.coords.longitude);
@@ -151,19 +178,27 @@ export default function HomeScreen() {
 
   const FilterButton = ({ filter }: { filter: typeof filterOptions[0] }) => {
     const isActive = activeFilters.includes(filter.id);
+    const isExpanded = expandedFilter === filter.id;
+    
+    const handleFilterPress = () => {
+      if (filter.id === 'all') {
+        setActiveFilters(['all']);
+        setExpandedFilter(null);
+      } else {
+        const newFilters = activeFilters.includes(filter.id)
+          ? activeFilters.filter(f => f !== filter.id)
+          : [...activeFilters.filter(f => f !== 'all'), filter.id];
+        setActiveFilters(newFilters.length ? newFilters : ['all']);
+        
+        // Toggle expanded state
+        setExpandedFilter(isExpanded ? null : filter.id);
+      }
+    };
+
     return (
       <TouchableOpacity
         style={[styles.filterButton, isActive && styles.filterButtonActive]}
-        onPress={() => {
-          if (filter.id === 'all') {
-            setActiveFilters(['all']);
-          } else {
-            const newFilters = activeFilters.includes(filter.id)
-              ? activeFilters.filter(f => f !== filter.id)
-              : [...activeFilters.filter(f => f !== 'all'), filter.id];
-            setActiveFilters(newFilters.length ? newFilters : ['all']);
-          }
-        }}
+        onPress={handleFilterPress}
       >
         <Ionicons 
           name={filter.icon as any} 
@@ -173,7 +208,107 @@ export default function HomeScreen() {
         <Text style={[styles.filterText, isActive && styles.filterTextActive]}>
           {filter.label}
         </Text>
+        {filter.id !== 'all' && (
+          <Ionicons 
+            name={isExpanded ? 'chevron-up' : 'chevron-down'} 
+            size={14} 
+            color={isActive ? '#ffffff' : '#0077b6'} 
+          />
+        )}
       </TouchableOpacity>
+    );
+  };
+
+  const ExpandedFilterContent = () => {
+    if (!expandedFilter || expandedFilter === 'all') return null;
+
+    const getMockListItems = (filterId: string) => {
+      switch (filterId) {
+        case 'food':
+          return ['Italian Restaurant', 'Local Street Food', 'Coffee Shop', 'Fine Dining'];
+        case 'accommodation':
+          return ['Luxury Hotel', 'Budget Hostel', 'Boutique B&B', 'Vacation Rental'];
+        case 'attraction':
+          return ['Historical Museum', 'Art Gallery', 'City Park', 'Landmark Tour'];
+        case 'people':
+          return ['Solo Travelers (5)', 'Adventure Group (3)', 'Photography Club (8)', 'Food Lovers (12)'];
+        default:
+          return [];
+      }
+    };
+
+    const filterInfo = filterOptions.find(f => f.id === expandedFilter);
+    if (!filterInfo) return null;
+
+    return (
+      <View style={styles.expandedFilterCard}>
+        <View style={styles.expandedFilterHeader}>
+          <View style={styles.expandedFilterTitleRow}>
+            <Ionicons name={filterInfo.icon as any} size={20} color="#0077b6" />
+            <Text style={styles.expandedFilterTitle}>Nearby {filterInfo.label}</Text>
+          </View>
+          <TouchableOpacity 
+            style={styles.closeButton}
+            onPress={() => setExpandedFilter(null)}
+          >
+            <Ionicons name="close" size={18} color="#8a9ab0" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.expandedFilterList}>
+          {getMockListItems(expandedFilter).map((item, index) => (
+            <TouchableOpacity key={index} style={styles.filterListItem}>
+              <View style={styles.listItemContent}>
+                <Text style={styles.filterListItemText}>{item}</Text>
+                <Text style={styles.filterListItemSubtext}>2.3 km away</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={16} color="#d0e0f0" />
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+    );
+  };
+
+  const TripInfoCard = () => {
+    if (!currentTrip) return null;
+
+    const formatDate = (date: Date | null) => {
+      if (!date) return 'Not set';
+      return new Date(date).toLocaleDateString();
+    };
+
+    return (
+      <View style={styles.tripInfoCard}>
+        <View style={styles.tripInfoHeader}>
+          <Ionicons name="airplane" size={20} color="#0077b6" />
+          <Text style={styles.tripInfoTitle}>Your Trip to {currentTrip.destination}</Text>
+        </View>
+        <View style={styles.tripInfoContent}>
+          <View style={styles.tripInfoRow}>
+            <Ionicons name="calendar" size={16} color="#6B7280" />
+            <Text style={styles.tripInfoText}>
+              {formatDate(currentTrip.startDate)} - {formatDate(currentTrip.endDate)}
+            </Text>
+          </View>
+          <View style={styles.tripInfoRow}>
+            <Ionicons name="people" size={16} color="#6B7280" />
+            <Text style={styles.tripInfoText}>{currentTrip.numberOfPeople} travelers</Text>
+          </View>
+          <View style={styles.tripInfoRow}>
+            <Ionicons name="card" size={16} color="#6B7280" />
+            <Text style={styles.tripInfoText}>${currentTrip.budget} budget</Text>
+          </View>
+          {currentTrip.interests.length > 0 && (
+            <View style={styles.tripInfoRow}>
+              <Ionicons name="heart" size={16} color="#6B7280" />
+              <Text style={styles.tripInfoText}>
+                {currentTrip.interests.slice(0, 3).join(', ')}
+                {currentTrip.interests.length > 3 && ` +${currentTrip.interests.length - 3} more`}
+              </Text>
+            </View>
+          )}
+        </View>
+      </View>
     );
   };
 
@@ -190,10 +325,15 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <MapView
         style={styles.map}
-        region={region}
-        onRegionChange={setRegion}
+        initialRegion={region}
+        onRegionChangeComplete={setRegion}
         showsUserLocation={true}
         showsMyLocationButton={false}
+        moveOnMarkerPress={false}
+        pitchEnabled={true}
+        rotateEnabled={false}
+        loadingEnabled={false}
+        ref={mapRef}
       >
         {markers.map((marker) => (
           <Marker
@@ -220,6 +360,12 @@ export default function HomeScreen() {
         ))}
       </View>
 
+      {/* Expanded Filter Content */}
+      <ExpandedFilterContent />
+
+      {/* Trip Info Card */}
+      {currentTrip && <TripInfoCard />}
+
       {/* Action Buttons */}
       <View style={styles.actionButtons}>
         <TouchableOpacity
@@ -231,22 +377,24 @@ export default function HomeScreen() {
         
         <TouchableOpacity
           style={styles.actionButton}
-          onPress={() => router.push('/destinations')}
+          onPress={() => router.push('/(tabs)/destinations')}
         >
           <Ionicons name="add" size={24} color="#0077b6" />
         </TouchableOpacity>
       </View>
 
       {/* Bottom CTA */}
-      <View style={styles.bottomCTA}>
-        <TouchableOpacity
-          style={styles.destinationButton}
-          onPress={() => router.push('/destinations')}
-        >
-          <Text style={styles.destinationButtonText}>Plan Your Trip</Text>
-          <Ionicons name="arrow-forward" size={20} color="#ffffff" />
-        </TouchableOpacity>
-      </View>
+      {!currentTrip && (
+        <View style={styles.bottomCTA}>
+          <TouchableOpacity
+            style={styles.destinationButton}
+            onPress={() => router.push('/(tabs)/destinations')}
+          >
+            <Text style={styles.destinationButtonText}>Plan Your Trip</Text>
+            <Ionicons name="arrow-forward" size={20} color="#ffffff" />
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }
@@ -311,6 +459,9 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 5,
   },
+  filterButtonContainer: {
+    alignItems: 'center',
+  },
   filterButton: {
     alignItems: 'center',
     paddingVertical: 8,
@@ -332,6 +483,34 @@ const styles = StyleSheet.create({
   },
   filterTextActive: {
     color: '#ffffff',
+  },
+  expandedContent: {
+    padding: 12,
+  },
+  expandedTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#0077b6',
+    marginBottom: 8,
+  },
+  filterListItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  filterListItemText: {
+    fontSize: 14,
+    color: '#1F2937',
+    fontWeight: '500',
+  },
+  filterListItemSubtext: {
+    fontSize: 12,
+    color: '#8a9ab0',
+    marginTop: 2,
+  },
+  listItemContent: {
+    flex: 1,
   },
   actionButtons: {
     position: 'absolute',
@@ -376,5 +555,79 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  tripInfoCard: {
+    position: 'absolute',
+    bottom: 100,
+    left: 20,
+    right: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: 12,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  tripInfoHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+    gap: 8,
+  },
+  tripInfoTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#0077b6',
+  },
+  tripInfoContent: {
+    gap: 8,
+  },
+  tripInfoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  tripInfoText: {
+    fontSize: 14,
+    color: '#6B7280',
+    flex: 1,
+  },
+  expandedFilterCard: {
+    position: 'absolute',
+    top: 320,
+    left: 20,
+    right: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: 12,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  expandedFilterHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  expandedFilterTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  expandedFilterTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#0077b6',
+  },
+  expandedFilterList: {
+    gap: 8,
+  },
+  closeButton: {
+    padding: 4,
   },
 });
