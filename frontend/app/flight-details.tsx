@@ -561,4 +561,9 @@ const styles = StyleSheet.create({
   bottomSpacing: {
     height: 30,
   },
-}); 
+});
+
+// Screen options to hide the header
+export const options = {
+  headerShown: false,
+}; 

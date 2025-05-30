@@ -382,19 +382,6 @@ export default function HomeScreen() {
           <Ionicons name="add" size={24} color="#0077b6" />
         </TouchableOpacity>
       </View>
-
-      {/* Bottom CTA */}
-      {!currentTrip && (
-        <View style={styles.bottomCTA}>
-          <TouchableOpacity
-            style={styles.destinationButton}
-            onPress={() => router.push('/(tabs)/destinations')}
-          >
-            <Text style={styles.destinationButtonText}>Plan Your Trip</Text>
-            <Ionicons name="arrow-forward" size={20} color="#ffffff" />
-          </TouchableOpacity>
-        </View>
-      )}
     </View>
   );
 }
@@ -530,31 +517,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
-  },
-  bottomCTA: {
-    position: 'absolute',
-    bottom: 40,
-    left: 20,
-    right: 20,
-  },
-  destinationButton: {
-    backgroundColor: '#0077b6',
-    borderRadius: 12,
-    padding: 16,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
-  },
-  destinationButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
   tripInfoCard: {
     position: 'absolute',
