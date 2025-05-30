@@ -7,36 +7,54 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  Animated,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
-export default function FlightsScreen() {
+export default function FlightScreen() {
   const router = useRouter();
   const [flightNumber, setFlightNumber] = useState('');
-  const [airline, setAirline] = useState('');
-  const [departureDate, setDepartureDate] = useState('');
+  const [email, setEmail] = useState('');
+  const [lastName, setLastName] = useState('');
+  const fadeAnim = new Animated.Value(0);
+
+  React.useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   const quickSearchOptions = [
     { flightNumber: 'AA123', airline: 'American Airlines', route: 'JFK → LAX' },
-    { flightNumber: 'UA456', airline: 'United Airlines', route: 'LAX → ORD' },
-    { flightNumber: 'DL789', airline: 'Delta Airlines', route: 'ATL → JFK' },
-    { flightNumber: 'SW012', airline: 'Southwest Airlines', route: 'LAS → PHX' },
+    { flightNumber: 'UA456', airline: 'United Airlines', route: 'SFO → ORD' },
+    { flightNumber: 'DL789', airline: 'Delta Air Lines', route: 'ATL → LHR' },
+    { flightNumber: 'SW012', airline: 'Southwest Airlines', route: 'BWI → LAX' },
   ];
+
+  const validateFlightNumber = (number: string) => {
+    const flightRegex = /^[A-Z]{2,3}\d{3,4}$/;
+    return flightRegex.test(number.toUpperCase());
+  };
 
   const handleFlightSearch = () => {
     if (!flightNumber.trim()) {
-      Alert.alert('Missing Information', 'Please enter a flight number');
+      Alert.alert('Required Field', 'Please enter a flight number');
       return;
     }
 
-    // Navigate to flight details page
+    if (!validateFlightNumber(flightNumber)) {
+      Alert.alert('Invalid Format', 'Flight number format: AA123 or XYZ1234');
+      return;
+    }
+
     router.push({
       pathname: '/flight-details',
       params: {
         flightNumber: flightNumber.toUpperCase(),
-        airline: airline || 'Unknown Airline',
-        departureDate: departureDate || new Date().toISOString(),
+        airline: 'Demo Airline',
       },
     });
   };
@@ -47,161 +65,182 @@ export default function FlightsScreen() {
       params: {
         flightNumber: flight.flightNumber,
         airline: flight.airline,
-        departureDate: new Date().toISOString(),
       },
     });
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Flight Information</Text>
-        <Text style={styles.headerSubtitle}>Track your flight and get airport details</Text>
-      </View>
-
-      {/* Flight Search */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Search Flight</Text>
-        
-        <View style={styles.inputContainer}>
-          <Ionicons name="airplane" size={20} color="#0ea5e9" style={styles.inputIcon} />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Enter flight number (e.g., AA123, UA456)"
-            value={flightNumber}
-            onChangeText={setFlightNumber}
-            placeholderTextColor="#64748b"
-            autoCapitalize="characters"
-          />
+    <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Header */}
+        <View style={styles.header}>
+          <View style={styles.headerGradient}>
+            <Text style={styles.headerTitle}>Flight Tracker</Text>
+            <Text style={styles.headerSubtitle}>Track your flight status and get real-time updates</Text>
+          </View>
         </View>
 
-        <View style={styles.inputContainer}>
-          <Ionicons name="business" size={20} color="#0ea5e9" style={styles.inputIcon} />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Airline (optional)"
-            value={airline}
-            onChangeText={setAirline}
-            placeholderTextColor="#64748b"
-          />
+        {/* Input Section */}
+        <View style={styles.section}>
+          <View style={styles.sectionTitleContainer}>
+            <Ionicons name="airplane" size={20} color="#1e3a8a" />
+            <Text style={styles.sectionTitle}>Find Your Flight</Text>
+          </View>
+          <Text style={styles.sectionSubtitle}>Enter your flight number or search by details</Text>
+          
+          <View style={styles.inputContainer}>
+            <Ionicons name="airplane" size={20} color="#1e3a8a" style={styles.inputIcon} />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Flight number (e.g., AA123, UA456)"
+              value={flightNumber}
+              onChangeText={setFlightNumber}
+              placeholderTextColor="#e5c07b"
+              autoCapitalize="characters"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Ionicons name="mail" size={20} color="#1e3a8a" style={styles.inputIcon} />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Email (optional)"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              placeholderTextColor="#e5c07b"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Ionicons name="person" size={20} color="#1e3a8a" style={styles.inputIcon} />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Last name (optional)"
+              value={lastName}
+              onChangeText={setLastName}
+              placeholderTextColor="#e5c07b"
+            />
+          </View>
+
+          <TouchableOpacity style={styles.searchButton} onPress={handleFlightSearch}>
+            <Text style={styles.searchButtonText}>Track Flight</Text>
+            <Ionicons name="search" size={20} color="#fdfaf6" />
+          </TouchableOpacity>
         </View>
 
-        <View style={styles.inputContainer}>
-          <Ionicons name="calendar" size={20} color="#0ea5e9" style={styles.inputIcon} />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Departure date (optional)"
-            value={departureDate}
-            onChangeText={setDepartureDate}
-            placeholderTextColor="#64748b"
-          />
+        {/* Quick Search Options */}
+        <View style={styles.section}>
+          <View style={styles.sectionTitleContainer}>
+            <Ionicons name="library" size={20} color="#1e3a8a" />
+            <Text style={styles.sectionTitle}>Demo Flights</Text>
+          </View>
+          <Text style={styles.sectionSubtitle}>Popular flight routes for demonstration</Text>
+          
+          <View style={styles.quickSearchContainer}>
+            {quickSearchOptions.map((flight, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.quickSearchCard}
+                onPress={() => handleQuickSearch(flight)}
+              >
+                <View style={styles.quickSearchHeader}>
+                  <Text style={styles.flightNumber}>{flight.flightNumber}</Text>
+                  <Ionicons name="chevron-forward" size={20} color="#e5c07b" />
+                </View>
+                <Text style={styles.airline}>{flight.airline}</Text>
+                <Text style={styles.route}>{flight.route}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
 
-        <TouchableOpacity style={styles.searchButton} onPress={handleFlightSearch}>
-          <Text style={styles.searchButtonText}>Get Flight Details</Text>
-          <Ionicons name="search" size={20} color="#ffffff" />
-        </TouchableOpacity>
-      </View>
-
-      {/* Quick Search Options */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Quick Search</Text>
-        <Text style={styles.sectionSubtitle}>Popular flights for demonstration</Text>
-        
-        <View style={styles.quickSearchContainer}>
-          {quickSearchOptions.map((flight, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.quickSearchCard}
-              onPress={() => handleQuickSearch(flight)}
-            >
-              <View style={styles.quickSearchHeader}>
-                <Text style={styles.flightNumber}>{flight.flightNumber}</Text>
-                <Ionicons name="chevron-forward" size={20} color="#64748b" />
+        {/* Features */}
+        <View style={styles.section}>
+          <View style={styles.sectionTitleContainer}>
+            <Ionicons name="checkmark-circle" size={20} color="#1e3a8a" />
+            <Text style={styles.sectionTitle}>What You'll Get</Text>
+          </View>
+          
+          <View style={styles.featuresContainer}>
+            <View style={styles.featureItem}>
+              <View style={[styles.featureIcon, { backgroundColor: '#f5f3e7' }]}>
+                <Ionicons name="airplane" size={24} color="#1e3a8a" />
               </View>
-              <Text style={styles.airline}>{flight.airline}</Text>
-              <Text style={styles.route}>{flight.route}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
+              <View style={styles.featureContent}>
+                <Text style={styles.featureTitle}>Real-time Status</Text>
+                <Text style={styles.featureText}>Live updates on departure, arrival, and gate changes</Text>
+              </View>
+            </View>
 
-      {/* Features */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>What You'll Get</Text>
-        
-        <View style={styles.featuresContainer}>
-          <View style={styles.featureItem}>
-            <View style={styles.featureIcon}>
-              <Ionicons name="time" size={24} color="#0ea5e9" />
+            <View style={styles.featureItem}>
+              <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
+                <Ionicons name="location" size={24} color="#1e3a8a" />
+              </View>
+              <View style={styles.featureContent}>
+                <Text style={styles.featureTitle}>Airport Information</Text>
+                <Text style={styles.featureText}>Terminal details, gates, and airport amenities</Text>
+              </View>
             </View>
-            <View style={styles.featureContent}>
-              <Text style={styles.featureTitle}>Real-time Updates</Text>
-              <Text style={styles.featureText}>Live flight status, delays, and gate changes</Text>
-            </View>
-          </View>
 
-          <View style={styles.featureItem}>
-            <View style={styles.featureIcon}>
-              <Ionicons name="map" size={24} color="#0ea5e9" />
+            <View style={styles.featureItem}>
+              <View style={[styles.featureIcon, { backgroundColor: '#f5f3e7' }]}>
+                <Ionicons name="bag" size={24} color="#1e3a8a" />
+              </View>
+              <View style={styles.featureContent}>
+                <Text style={styles.featureTitle}>Baggage Information</Text>
+                <Text style={styles.featureText}>Carry-on and checked baggage policies</Text>
+              </View>
             </View>
-            <View style={styles.featureContent}>
-              <Text style={styles.featureTitle}>Airport Maps</Text>
-              <Text style={styles.featureText}>Interactive maps with amenities and services</Text>
-            </View>
-          </View>
 
-          <View style={styles.featureItem}>
-            <View style={styles.featureIcon}>
-              <Ionicons name="bag" size={24} color="#0ea5e9" />
-            </View>
-            <View style={styles.featureContent}>
-              <Text style={styles.featureTitle}>Baggage Info</Text>
-              <Text style={styles.featureText}>Weight limits, dimensions, and restrictions</Text>
-            </View>
-          </View>
-
-          <View style={styles.featureItem}>
-            <View style={styles.featureIcon}>
-              <Ionicons name="restaurant" size={24} color="#0ea5e9" />
-            </View>
-            <View style={styles.featureContent}>
-              <Text style={styles.featureTitle}>Airport Amenities</Text>
-              <Text style={styles.featureText}>Restaurants, shops, lounges, and services</Text>
+            <View style={styles.featureItem}>
+              <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
+                <Ionicons name="map" size={24} color="#1e3a8a" />
+              </View>
+              <View style={styles.featureContent}>
+                <Text style={styles.featureTitle}>Interactive Maps</Text>
+                <Text style={styles.featureText}>Navigate airports with detailed terminal maps</Text>
+              </View>
             </View>
           </View>
         </View>
-      </View>
 
-      <View style={styles.bottomSpacing} />
-    </ScrollView>
+        <View style={styles.bottomSpacing} />
+      </ScrollView>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#fdfaf6', // Ivory
   },
   header: {
-    padding: 20,
     paddingTop: 60,
     paddingBottom: 30,
-    backgroundColor: '#1e293b',
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
+    paddingHorizontal: 20,
+  },
+  headerGradient: {
+    backgroundColor: '#333333', // Charcoal
+    borderRadius: 24,
+    padding: 24,
+    shadowColor: '#1e3a8a', // Rich Navy
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+    elevation: 8,
   },
   headerTitle: {
     fontSize: 28,
     fontWeight: '800',
-    color: '#ffffff',
+    color: '#fdfaf6', // Ivory
     marginBottom: 6,
     letterSpacing: -0.4,
   },
   headerSubtitle: {
     fontSize: 16,
-    color: '#cbd5e1',
+    color: '#e5c07b', // Champagne Gold
     fontWeight: '400',
     opacity: 0.9,
   },
@@ -209,32 +248,36 @@ const styles = StyleSheet.create({
     margin: 16,
     marginBottom: 24,
   },
+  sectionTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1e293b',
-    marginBottom: 8,
-    letterSpacing: -0.2,
+    color: '#333333', // Charcoal
+    marginLeft: 8,
   },
   sectionSubtitle: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     marginBottom: 16,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
-    shadowColor: '#1e293b',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
     shadowRadius: 8,
     elevation: 3,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#e5c07b', // Champagne Gold
   },
   inputIcon: {
     marginRight: 10,
@@ -242,18 +285,18 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     fontSize: 16,
-    color: '#334155',
+    color: '#333333', // Charcoal
     fontWeight: '500',
   },
   searchButton: {
-    backgroundColor: '#1e293b',
+    backgroundColor: '#1e3a8a', // Rich Navy
     borderRadius: 12,
     padding: 16,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
-    shadowColor: '#1e293b',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 12,
@@ -261,7 +304,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   searchButtonText: {
-    color: '#ffffff',
+    color: '#fdfaf6', // Ivory
     fontSize: 16,
     fontWeight: '700',
     letterSpacing: 0.3,
@@ -270,16 +313,16 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   quickSearchCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
-    shadowColor: '#1e293b',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
     shadowRadius: 8,
     elevation: 3,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#e5c07b', // Champagne Gold
   },
   quickSearchHeader: {
     flexDirection: 'row',
@@ -290,17 +333,17 @@ const styles = StyleSheet.create({
   flightNumber: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1e293b',
+    color: '#1e3a8a', // Rich Navy
   },
   airline: {
     fontSize: 14,
-    color: '#0ea5e9',
+    color: '#333333', // Charcoal
     fontWeight: '600',
     marginBottom: 4,
   },
   route: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '500',
   },
   featuresContainer: {
@@ -309,22 +352,21 @@ const styles = StyleSheet.create({
   featureItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
-    shadowColor: '#1e293b',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.04,
     shadowRadius: 4,
     elevation: 2,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#e5c07b', // Champagne Gold
   },
   featureIcon: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#f0f9ff',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
@@ -335,12 +377,12 @@ const styles = StyleSheet.create({
   featureTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#333333', // Charcoal
     marginBottom: 4,
   },
   featureText: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     lineHeight: 20,
   },
   bottomSpacing: {

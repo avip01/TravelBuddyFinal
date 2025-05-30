@@ -249,41 +249,41 @@ export default function CruiseDetailsScreen() {
         {/* Cabin Information */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="bed" size={20} color="#004a77" />
+            <Ionicons name="bed" size={20} color="#1e3a8a" />
             <Text style={styles.sectionTitle}>Cabin Information</Text>
           </View>
           <View style={styles.cabinCard}>
             <View style={styles.cabinRow}>
               <View style={styles.cabinItem}>
-                <Ionicons name="layers" size={20} color="#0077b6" />
+                <Ionicons name="layers" size={20} color="#1e3a8a" />
                 <Text style={styles.cabinLabel}>Deck</Text>
                 <Text style={styles.cabinValue}>{cabinInfo.deckNumber}</Text>
               </View>
               <View style={styles.cabinItem}>
-                <Ionicons name="home" size={20} color="#0077b6" />
+                <Ionicons name="home" size={20} color="#1e3a8a" />
                 <Text style={styles.cabinLabel}>Cabin</Text>
                 <Text style={styles.cabinValue}>{cabinInfo.cabinNumber}</Text>
               </View>
             </View>
             <View style={styles.cabinRow}>
               <View style={styles.cabinItem}>
-                <Ionicons name="bed" size={20} color="#0077b6" />
+                <Ionicons name="bed" size={20} color="#1e3a8a" />
                 <Text style={styles.cabinLabel}>Type</Text>
                 <Text style={styles.cabinValue}>{cabinInfo.cabinType}</Text>
               </View>
               <View style={styles.cabinItem}>
-                <Ionicons name="call" size={20} color="#0077b6" />
+                <Ionicons name="call" size={20} color="#1e3a8a" />
                 <Text style={styles.cabinLabel}>Phone</Text>
                 <Text style={styles.cabinValue}>{cabinInfo.roomPhone}</Text>
               </View>
             </View>
             <View style={styles.cabinDetails}>
               <View style={styles.cabinDetailRow}>
-                <Ionicons name="bed" size={16} color="#0077b6" />
+                <Ionicons name="bed" size={16} color="#1e3a8a" />
                 <Text style={styles.cabinDetailText}>{cabinInfo.bedSize}</Text>
               </View>
               <View style={styles.cabinDetailRow}>
-                <Ionicons name="people" size={16} color="#0077b6" />
+                <Ionicons name="people" size={16} color="#1e3a8a" />
                 <Text style={styles.cabinDetailText}>{cabinInfo.occupancy}</Text>
               </View>
             </View>
@@ -293,7 +293,7 @@ export default function CruiseDetailsScreen() {
         {/* Dining Options */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="restaurant" size={20} color="#004a77" />
+            <Ionicons name="restaurant" size={20} color="#1e3a8a" />
             <Text style={styles.sectionTitle}>Dining & Food Options</Text>
           </View>
           <View style={styles.restaurantGrid}>
@@ -303,7 +303,7 @@ export default function CruiseDetailsScreen() {
                   <Ionicons 
                     name={restaurant.type === 'Bar' ? 'wine' : 'restaurant'} 
                     size={20} 
-                    color="#0077b6" 
+                    color="#1e3a8a" 
                   />
                   <Text style={styles.restaurantName}>{restaurant.name}</Text>
                 </View>
@@ -318,14 +318,14 @@ export default function CruiseDetailsScreen() {
         {/* Shopping */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="storefront" size={20} color="#004a77" />
+            <Ionicons name="storefront" size={20} color="#1e3a8a" />
             <Text style={styles.sectionTitle}>Shops & Onboard Stores</Text>
           </View>
           <View style={styles.shopGrid}>
             {shops.map((shop, index) => (
               <View key={index} style={styles.shopCard}>
                 <View style={styles.shopHeader}>
-                  <Ionicons name="storefront" size={18} color="#004a77" />
+                  <Ionicons name="storefront" size={18} color="#1e3a8a" />
                   <Text style={styles.shopName}>{shop.name}</Text>
                 </View>
                 <Text style={styles.shopType}>{shop.type}</Text>
@@ -338,21 +338,21 @@ export default function CruiseDetailsScreen() {
         {/* Entertainment */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="musical-notes" size={20} color="#004a77" />
+            <Ionicons name="musical-notes" size={20} color="#1e3a8a" />
             <Text style={styles.sectionTitle}>Today's Entertainment</Text>
           </View>
           <View style={styles.entertainmentList}>
             {entertainment.map((event, index) => (
               <View key={index} style={styles.entertainmentCard}>
                 <View style={styles.entertainmentTime}>
-                  <Ionicons name="time" size={16} color="#0077b6" />
+                  <Ionicons name="time" size={16} color="#1e3a8a" />
                   <Text style={styles.entertainmentTimeText}>{event.time}</Text>
                 </View>
                 <View style={styles.entertainmentContent}>
                   <Text style={styles.entertainmentName}>{event.name}</Text>
                   <Text style={styles.entertainmentLocation}>{event.deck} • {event.type}</Text>
                 </View>
-                <Ionicons name="chevron-forward" size={16} color="#d0e0f0" />
+                <Ionicons name="chevron-forward" size={16} color="#e5c07b" />
               </View>
             ))}
           </View>
@@ -361,7 +361,7 @@ export default function CruiseDetailsScreen() {
         {/* Live Map */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="map" size={20} color="#004a77" />
+            <Ionicons name="map" size={20} color="#1e3a8a" />
             <Text style={styles.sectionTitle}>Live Ship Location</Text>
           </View>
           <View style={styles.mapContainer}>
@@ -383,7 +383,7 @@ export default function CruiseDetailsScreen() {
             </MapView>
             <View style={styles.mapOverlay}>
               <View style={styles.mapOverlayHeader}>
-                <Ionicons name="boat" size={16} color="#0077b6" />
+                <Ionicons name="boat" size={16} color="#1e3a8a" />
                 <Text style={styles.mapOverlayText}>You are here</Text>
               </View>
               <Text style={styles.mapOverlaySubtext}>Speed: 22 knots • Weather: Sunny 78°F</Text>
@@ -394,33 +394,33 @@ export default function CruiseDetailsScreen() {
         {/* Contacts & Support */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="call" size={20} color="#004a77" />
+            <Ionicons name="call" size={20} color="#1e3a8a" />
             <Text style={styles.sectionTitle}>Contacts & Support</Text>
           </View>
           <View style={styles.contactsContainer}>
             <View style={styles.contactCard}>
-              <Ionicons name="call" size={20} color="#0077b6" />
+              <Ionicons name="call" size={20} color="#1e3a8a" />
               <View style={styles.contactInfo}>
                 <Text style={styles.contactTitle}>Guest Services</Text>
                 <Text style={styles.contactNumber}>Ext. 4000</Text>
               </View>
             </View>
             <View style={styles.contactCard}>
-              <Ionicons name="restaurant" size={20} color="#0077b6" />
+              <Ionicons name="restaurant" size={20} color="#1e3a8a" />
               <View style={styles.contactInfo}>
                 <Text style={styles.contactTitle}>Room Service</Text>
                 <Text style={styles.contactNumber}>Ext. 7777</Text>
               </View>
             </View>
             <View style={styles.contactCard}>
-              <Ionicons name="medical" size={20} color="#0077b6" />
+              <Ionicons name="medical" size={20} color="#1e3a8a" />
               <View style={styles.contactInfo}>
                 <Text style={styles.contactTitle}>Medical Center</Text>
                 <Text style={styles.contactNumber}>Ext. 911</Text>
               </View>
             </View>
             <View style={styles.contactCard}>
-              <Ionicons name="location" size={20} color="#0077b6" />
+              <Ionicons name="location" size={20} color="#1e3a8a" />
               <View style={styles.contactInfo}>
                 <Text style={styles.contactTitle}>Shore Excursions</Text>
                 <Text style={styles.contactNumber}>Ext. 8888</Text>
@@ -438,7 +438,7 @@ export default function CruiseDetailsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#fdfaf6', // Ivory
   },
   header: {
     flexDirection: 'row',
@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     paddingVertical: 15,
-    backgroundColor: '#0077b6',
+    backgroundColor: '#333333', // Charcoal
     paddingTop: 50,
   },
   backButton: {
@@ -459,22 +459,22 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#fdfaf6', // Ivory
   },
   headerSubtitle: {
     fontSize: 14,
-    color: '#d0e0f0',
+    color: '#e5c07b', // Champagne Gold
     marginTop: 2,
   },
   ticketBadge: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: 'rgba(229, 192, 123, 0.2)', // Champagne Gold with opacity
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 8,
   },
   ticketText: {
     fontSize: 12,
-    color: '#ffffff',
+    color: '#fdfaf6', // Ivory
     fontWeight: '600',
   },
   scrollView: {
@@ -484,14 +484,14 @@ const styles = StyleSheet.create({
     margin: 16,
     borderRadius: 16,
     overflow: 'hidden',
-    shadowColor: '#004a77',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 12,
     elevation: 8,
   },
   heroGradient: {
-    backgroundColor: '#0077b6',
+    backgroundColor: '#1e3a8a', // Rich Navy
     padding: 24,
   },
   heroContent: {
@@ -500,25 +500,25 @@ const styles = StyleSheet.create({
   heroShipName: {
     fontSize: 24,
     fontWeight: '800',
-    color: '#ffffff',
+    color: '#fdfaf6', // Ivory
     marginBottom: 8,
     textAlign: 'center',
   },
   heroRoute: {
     fontSize: 16,
-    color: '#d0e0f0',
+    color: '#e5c07b', // Champagne Gold
     marginBottom: 8,
     textAlign: 'center',
   },
   heroDates: {
     fontSize: 16,
-    color: '#ffffff',
+    color: '#fdfaf6', // Ivory
     fontWeight: '600',
     marginBottom: 4,
   },
   heroDuration: {
     fontSize: 14,
-    color: '#d0e0f0',
+    color: '#e5c07b', // Champagne Gold
   },
   section: {
     margin: 16,
@@ -533,7 +533,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#0077b6',
+    color: '#333333', // Charcoal
     lineHeight: 20,
   },
   itineraryScroll: {
@@ -543,16 +543,18 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   itineraryCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
     marginRight: 12,
     width: 180,
-    shadowColor: '#0077b6',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 3,
+    borderWidth: 1,
+    borderColor: '#e5c07b', // Champagne Gold
   },
   itineraryHeader: {
     flexDirection: 'row',
@@ -563,7 +565,7 @@ const styles = StyleSheet.create({
   itineraryDate: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#0077b6',
+    color: '#1e3a8a', // Rich Navy
   },
   statusIndicator: {
     flexDirection: 'row',
@@ -575,13 +577,13 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: 10,
-    color: '#ffffff',
+    color: '#fdfaf6', // Ivory
     fontWeight: '600',
   },
   itineraryPort: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#333333', // Charcoal
     marginBottom: 8,
   },
   itineraryTimes: {
@@ -589,17 +591,19 @@ const styles = StyleSheet.create({
   },
   itineraryTime: {
     fontSize: 12,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
   },
   cabinCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
-    shadowColor: '#0077b6',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 3,
+    borderWidth: 1,
+    borderColor: '#e5c07b', // Champagne Gold
   },
   cabinRow: {
     flexDirection: 'row',
@@ -612,19 +616,19 @@ const styles = StyleSheet.create({
   },
   cabinLabel: {
     fontSize: 12,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     marginTop: 4,
     marginBottom: 2,
   },
   cabinValue: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#333333', // Charcoal
   },
   cabinDetails: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: '#f0f9ff',
+    backgroundColor: '#f5f3e7', // Light champagne
     borderRadius: 8,
     padding: 12,
   },
@@ -635,21 +639,23 @@ const styles = StyleSheet.create({
   },
   cabinDetailText: {
     fontSize: 14,
-    color: '#0077b6',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '500',
   },
   restaurantGrid: {
     gap: 12,
   },
   restaurantCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
-    shadowColor: '#0077b6',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 3,
+    borderWidth: 1,
+    borderColor: '#e5c07b', // Champagne Gold
   },
   restaurantHeader: {
     flexDirection: 'row',
@@ -660,23 +666,23 @@ const styles = StyleSheet.create({
   restaurantName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#333333', // Charcoal
     flex: 1,
   },
   restaurantCuisine: {
     fontSize: 14,
-    color: '#0077b6',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '500',
     marginBottom: 4,
   },
   restaurantInfo: {
     fontSize: 12,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     marginBottom: 4,
   },
   restaurantType: {
     fontSize: 12,
-    color: '#004a77',
+    color: '#333333', // Charcoal
     fontWeight: '600',
   },
   shopGrid: {
@@ -685,15 +691,17 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   shopCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
     width: (width - 56) / 2,
-    shadowColor: '#0077b6',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 3,
+    borderWidth: 1,
+    borderColor: '#e5c07b', // Champagne Gold
   },
   shopHeader: {
     flexDirection: 'row',
@@ -704,33 +712,35 @@ const styles = StyleSheet.create({
   shopName: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#333333', // Charcoal
     flex: 1,
   },
   shopType: {
     fontSize: 12,
-    color: '#0077b6',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '500',
     marginBottom: 4,
   },
   shopDeck: {
     fontSize: 12,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
   },
   entertainmentList: {
     gap: 12,
   },
   entertainmentCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: '#0077b6',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 3,
+    borderWidth: 1,
+    borderColor: '#e5c07b', // Champagne Gold
   },
   entertainmentTime: {
     flexDirection: 'row',
@@ -740,7 +750,7 @@ const styles = StyleSheet.create({
   },
   entertainmentTimeText: {
     fontSize: 12,
-    color: '#0077b6',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '600',
   },
   entertainmentContent: {
@@ -749,12 +759,12 @@ const styles = StyleSheet.create({
   entertainmentName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#333333', // Charcoal
     marginBottom: 2,
   },
   entertainmentLocation: {
     fontSize: 12,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
   },
   mapContainer: {
     height: 200,
@@ -770,7 +780,7 @@ const styles = StyleSheet.create({
     bottom: 12,
     left: 12,
     right: 12,
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    backgroundColor: 'rgba(253, 250, 246, 0.95)', // Ivory with opacity
     borderRadius: 8,
     padding: 12,
   },
@@ -783,27 +793,29 @@ const styles = StyleSheet.create({
   mapOverlayText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#0077b6',
+    color: '#1e3a8a', // Rich Navy
     marginBottom: 2,
   },
   mapOverlaySubtext: {
     fontSize: 12,
-    color: '#64748b',
+    color: '#333333', // Charcoal
   },
   contactsContainer: {
     gap: 12,
   },
   contactCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: '#0077b6',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 3,
+    borderWidth: 1,
+    borderColor: '#e5c07b', // Champagne Gold
     gap: 12,
   },
   contactInfo: {
@@ -812,12 +824,12 @@ const styles = StyleSheet.create({
   contactTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#333333', // Charcoal
     marginBottom: 2,
   },
   contactNumber: {
     fontSize: 14,
-    color: '#0077b6',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '500',
   },
   bottomSpacing: {

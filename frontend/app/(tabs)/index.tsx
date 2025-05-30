@@ -203,7 +203,7 @@ export default function HomeScreen() {
         <Ionicons 
           name={filter.icon as any} 
           size={20} 
-          color={isActive ? '#ffffff' : '#0077b6'} 
+          color={isActive ? '#fdfaf6' : '#1e3a8a'} 
         />
         <Text style={[styles.filterText, isActive && styles.filterTextActive]}>
           {filter.label}
@@ -212,7 +212,7 @@ export default function HomeScreen() {
           <Ionicons 
             name={isExpanded ? 'chevron-up' : 'chevron-down'} 
             size={14} 
-            color={isActive ? '#ffffff' : '#0077b6'} 
+            color={isActive ? '#fdfaf6' : '#1e3a8a'} 
           />
         )}
       </TouchableOpacity>
@@ -244,14 +244,14 @@ export default function HomeScreen() {
       <View style={styles.expandedFilterCard}>
         <View style={styles.expandedFilterHeader}>
           <View style={styles.expandedFilterTitleRow}>
-            <Ionicons name={filterInfo.icon as any} size={20} color="#0077b6" />
+            <Ionicons name={filterInfo.icon as any} size={20} color="#1e3a8a" />
             <Text style={styles.expandedFilterTitle}>Nearby {filterInfo.label}</Text>
           </View>
           <TouchableOpacity 
             style={styles.closeButton}
             onPress={() => setExpandedFilter(null)}
           >
-            <Ionicons name="close" size={18} color="#8a9ab0" />
+            <Ionicons name="close" size={18} color="#d4af37" />
           </TouchableOpacity>
         </View>
         <View style={styles.expandedFilterList}>
@@ -261,7 +261,7 @@ export default function HomeScreen() {
                 <Text style={styles.filterListItemText}>{item}</Text>
                 <Text style={styles.filterListItemSubtext}>2.3 km away</Text>
               </View>
-              <Ionicons name="chevron-forward" size={16} color="#d0e0f0" />
+              <Ionicons name="chevron-forward" size={16} color="#d4af37" />
             </TouchableOpacity>
           ))}
         </View>
@@ -280,27 +280,27 @@ export default function HomeScreen() {
     return (
       <View style={styles.tripInfoCard}>
         <View style={styles.tripInfoHeader}>
-          <Ionicons name="airplane" size={20} color="#0077b6" />
+          <Ionicons name="airplane" size={20} color="#1e3a8a" />
           <Text style={styles.tripInfoTitle}>Your Trip to {currentTrip.destination}</Text>
         </View>
         <View style={styles.tripInfoContent}>
           <View style={styles.tripInfoRow}>
-            <Ionicons name="calendar" size={16} color="#6B7280" />
+            <Ionicons name="calendar" size={16} color="#d4af37" />
             <Text style={styles.tripInfoText}>
               {formatDate(currentTrip.startDate)} - {formatDate(currentTrip.endDate)}
             </Text>
           </View>
           <View style={styles.tripInfoRow}>
-            <Ionicons name="people" size={16} color="#6B7280" />
+            <Ionicons name="people" size={16} color="#d4af37" />
             <Text style={styles.tripInfoText}>{currentTrip.numberOfPeople} travelers</Text>
           </View>
           <View style={styles.tripInfoRow}>
-            <Ionicons name="card" size={16} color="#6B7280" />
+            <Ionicons name="card" size={16} color="#d4af37" />
             <Text style={styles.tripInfoText}>${currentTrip.budget} budget</Text>
           </View>
           {currentTrip.interests.length > 0 && (
             <View style={styles.tripInfoRow}>
-              <Ionicons name="heart" size={16} color="#6B7280" />
+              <Ionicons name="heart" size={16} color="#d4af37" />
               <Text style={styles.tripInfoText}>
                 {currentTrip.interests.slice(0, 3).join(', ')}
                 {currentTrip.interests.length > 3 && ` +${currentTrip.interests.length - 3} more`}
@@ -323,6 +323,17 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      {/* Header Travel Card - moved to top */}
+      <View style={styles.header}>
+        <View style={styles.heroGradient}>
+          <Text style={styles.heroTitle}>
+            {currentTrip?.destination ? `Welcome to ${currentTrip.destination}!` : 'Travel Buddy'}
+          </Text>
+          <Text style={styles.heroSubtitle}>Discover amazing places around you</Text>
+          <Ionicons name="airplane" size={64} color="#e5c07b" style={styles.heroIcon} />
+        </View>
+      </View>
+
       <MapView
         style={styles.map}
         initialRegion={region}
@@ -345,14 +356,6 @@ export default function HomeScreen() {
         ))}
       </MapView>
 
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>
-          Welcome{user ? `, ${user.displayName}` : ''}!
-        </Text>
-        <Text style={styles.headerSubtitle}>Discover amazing places around you</Text>
-      </View>
-
       {/* Filter Bar */}
       <View style={styles.filterContainer}>
         {filterOptions.map((filter) => (
@@ -372,14 +375,14 @@ export default function HomeScreen() {
           style={styles.actionButton}
           onPress={getCurrentLocation}
         >
-          <Ionicons name="locate" size={24} color="#0077b6" />
+          <Ionicons name="locate" size={24} color="#1e3a8a" />
         </TouchableOpacity>
         
         <TouchableOpacity
           style={styles.actionButton}
           onPress={() => router.push('/(tabs)/destinations')}
         >
-          <Ionicons name="add" size={24} color="#0077b6" />
+          <Ionicons name="add" size={24} color="#1e3a8a" />
         </TouchableOpacity>
       </View>
     </View>
@@ -389,10 +392,11 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#fdfaf6', // Ivory
   },
   map: {
     flex: 1,
+    marginTop: 0, // Remove margin since header is now overlay
   },
   loadingContainer: {
     flex: 1,
@@ -407,44 +411,175 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   header: {
+    paddingTop: 60,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
     position: 'absolute',
-    top: 60,
-    left: 20,
-    right: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+  },
+  heroGradient: {
+    backgroundColor: 'rgba(51, 51, 51, 0.85)', // Charcoal with transparency
+    borderRadius: 24,
+    padding: 24,
+    shadowColor: '#1e3a8a', // Rich Navy
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+    elevation: 8,
+  },
+  heroTitle: {
+    fontSize: 32,
+    fontWeight: '800',
+    color: '#fdfaf6', // Ivory
+    marginBottom: 8,
+    letterSpacing: -0.6,
+  },
+  heroSubtitle: {
+    fontSize: 18,
+    color: '#d4af37', // Professional Gold
+    fontWeight: '400',
+    opacity: 0.9,
+  },
+  heroIcon: {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    opacity: 0.3,
+  },
+  section: {
+    marginHorizontal: 16,
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#333333', // Charcoal
+    marginBottom: 16,
+    letterSpacing: -0.3,
+  },
+  grid: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  gridItem: {
+    flex: 1,
+    backgroundColor: '#fdfaf6', // Ivory
+    borderRadius: 16,
+    padding: 20,
+    alignItems: 'center',
+    shadowColor: '#333333', // Charcoal
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: '#e5c07b', // Champagne Gold
+  },
+  gridIcon: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  gridTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#333333', // Charcoal
+    textAlign: 'center',
+    marginBottom: 6,
+  },
+  gridSubtitle: {
+    fontSize: 12,
+    color: '#1e3a8a', // Rich Navy
+    textAlign: 'center',
+    lineHeight: 16,
+  },
+  featuresContainer: {
+    gap: 12,
+  },
+  featureItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
-    shadowColor: '#000',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.06,
     shadowRadius: 8,
-    elevation: 5,
+    elevation: 3,
+    borderWidth: 1,
+    borderColor: '#e5c07b', // Champagne Gold
   },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#0077b6',
+  featureIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  featureContent: {
+    flex: 1,
+  },
+  featureTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333333', // Charcoal
     marginBottom: 4,
   },
-  headerSubtitle: {
+  featureDescription: {
     fontSize: 14,
-    color: '#6B7280',
+    color: '#1e3a8a', // Rich Navy
+    lineHeight: 20,
+  },
+  mapContainer: {
+    height: 200,
+    borderRadius: 16,
+    overflow: 'hidden',
+    shadowColor: '#333333', // Charcoal
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 6,
+  },
+  mapPlaceholder: {
+    flex: 1,
+    backgroundColor: '#e5c07b', // Champagne Gold
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mapPlaceholderText: {
+    fontSize: 16,
+    color: '#333333', // Charcoal
+    fontWeight: '600',
+    marginTop: 8,
+  },
+  bottomSpacing: {
+    height: 30,
   },
   filterContainer: {
     position: 'absolute',
-    top: 180,
+    top: 200, // Adjusted for overlay header
     left: 20,
     right: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    backgroundColor: 'rgba(253, 250, 246, 0.95)', // Ivory with opacity
     borderRadius: 12,
     padding: 12,
-    shadowColor: '#000',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: '#d4af37', // Professional Gold
   },
   filterButtonContainer: {
     alignItems: 'center',
@@ -456,20 +591,20 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: '#d0e0f0',
+    borderColor: '#d4af37', // Professional Gold
   },
   filterButtonActive: {
-    backgroundColor: '#0077b6',
-    borderColor: '#0077b6',
+    backgroundColor: '#1e3a8a', // Rich Navy
+    borderColor: '#1e3a8a', // Rich Navy
   },
   filterText: {
     fontSize: 12,
     marginTop: 4,
-    color: '#0077b6',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '500',
   },
   filterTextActive: {
-    color: '#ffffff',
+    color: '#fdfaf6', // Ivory
   },
   expandedContent: {
     padding: 12,
@@ -477,7 +612,7 @@ const styles = StyleSheet.create({
   expandedTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#0077b6',
+    color: '#1e3a8a', // Rich Navy
     marginBottom: 8,
   },
   filterListItem: {
@@ -488,12 +623,12 @@ const styles = StyleSheet.create({
   },
   filterListItemText: {
     fontSize: 14,
-    color: '#1F2937',
+    color: '#333333', // Charcoal
     fontWeight: '500',
   },
   filterListItemSubtext: {
     fontSize: 12,
-    color: '#8a9ab0',
+    color: '#1e3a8a', // Rich Navy
     marginTop: 2,
   },
   listItemContent: {
@@ -502,35 +637,39 @@ const styles = StyleSheet.create({
   actionButtons: {
     position: 'absolute',
     bottom: 120,
-    right: 20,
+    right: 36, // Moved further left to fit inside info card
     gap: 12,
   },
   actionButton: {
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: '#d4af37', // Professional Gold
   },
   tripInfoCard: {
     position: 'absolute',
     bottom: 100,
     left: 20,
     right: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    backgroundColor: 'rgba(253, 250, 246, 0.95)', // Ivory with opacity
     borderRadius: 12,
     padding: 16,
-    shadowColor: '#000',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: '#d4af37', // Professional Gold
   },
   tripInfoHeader: {
     flexDirection: 'row',
@@ -541,7 +680,7 @@ const styles = StyleSheet.create({
   tripInfoTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#0077b6',
+    color: '#1e3a8a', // Rich Navy
   },
   tripInfoContent: {
     gap: 8,
@@ -553,22 +692,24 @@ const styles = StyleSheet.create({
   },
   tripInfoText: {
     fontSize: 14,
-    color: '#6B7280',
+    color: '#333333', // Charcoal
     flex: 1,
   },
   expandedFilterCard: {
     position: 'absolute',
-    top: 320,
+    top: 340, // Adjusted for overlay header
     left: 20,
     right: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    backgroundColor: 'rgba(253, 250, 246, 0.95)', // Ivory with opacity
     borderRadius: 12,
     padding: 16,
-    shadowColor: '#000',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: '#d4af37', // Professional Gold
   },
   expandedFilterHeader: {
     flexDirection: 'row',
@@ -584,7 +725,7 @@ const styles = StyleSheet.create({
   expandedFilterTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#0077b6',
+    color: '#1e3a8a', // Rich Navy
   },
   expandedFilterList: {
     gap: 8,

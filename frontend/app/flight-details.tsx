@@ -134,11 +134,11 @@ export default function FlightDetailsScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="#ffffff" />
+          <Ionicons name="arrow-back" size={24} color="#fdfaf6" />
         </TouchableOpacity>
         <View style={styles.headerContent}>
-          <Text style={styles.headerTitle}>{flightData.flightNumber}</Text>
-          <Text style={styles.headerSubtitle}>{flightData.airline}</Text>
+          <Text style={styles.headerTitle}>{flightData.airline}</Text>
+          <Text style={styles.headerSubtitle}>Flight {flightData.flightNumber}</Text>
         </View>
         <StatusBadge status={flightData.status} />
       </View>
@@ -155,7 +155,12 @@ export default function FlightDetailsScreen() {
             
             <View style={styles.flightPath}>
               <View style={styles.flightLine} />
-              <Ionicons name="airplane" size={20} color="#0ea5e9" style={styles.planeIcon} />
+              <Ionicons 
+                name="airplane" 
+                size={20} 
+                color="#1e3a8a" 
+                style={styles.planeIcon} 
+              />
               <View style={styles.flightLine} />
             </View>
             
@@ -178,26 +183,37 @@ export default function FlightDetailsScreen() {
           <View style={styles.boardingCard}>
             <View style={styles.boardingRow}>
               <View style={styles.boardingItem}>
-                <Ionicons name="business" size={20} color="#0ea5e9" />
-                <Text style={styles.boardingLabel}>Terminal</Text>
-                <Text style={styles.boardingValue}>{flightData.terminal}</Text>
+                <Ionicons name="airplane" size={24} color="#1e3a8a" />
+                <Text style={styles.boardingLabel}>Gate</Text>
+                <Text style={styles.boardingValue}>A12</Text>
               </View>
               <View style={styles.boardingItem}>
-                <Ionicons name="exit" size={20} color="#0ea5e9" />
-                <Text style={styles.boardingLabel}>Gate</Text>
-                <Text style={styles.boardingValue}>{flightData.gate}</Text>
+                <Ionicons name="people" size={24} color="#1e3a8a" />
+                <Text style={styles.boardingLabel}>Seat</Text>
+                <Text style={styles.boardingValue}>14F</Text>
+              </View>
+              <View style={styles.boardingItem}>
+                <Ionicons name="person" size={24} color="#1e3a8a" />
+                <Text style={styles.boardingLabel}>Group</Text>
+                <Text style={styles.boardingValue}>B</Text>
               </View>
             </View>
+            
             <View style={styles.boardingRow}>
               <View style={styles.boardingItem}>
-                <Ionicons name="time" size={20} color="#0ea5e9" />
+                <Ionicons name="time" size={24} color="#1e3a8a" />
                 <Text style={styles.boardingLabel}>Boarding</Text>
-                <Text style={styles.boardingValue}>3:40 PM</Text>
+                <Text style={styles.boardingValue}>10:45 AM</Text>
               </View>
               <View style={styles.boardingItem}>
-                <Ionicons name="call" size={20} color="#0ea5e9" />
-                <Text style={styles.boardingLabel}>Support</Text>
-                <Text style={styles.boardingValue}>(123) 456-7890</Text>
+                <Ionicons name="card" size={24} color="#1e3a8a" />
+                <Text style={styles.boardingLabel}>Terminal</Text>
+                <Text style={styles.boardingValue}>3</Text>
+              </View>
+              <View style={styles.boardingItem}>
+                <Ionicons name="checkmark-circle" size={24} color="#1e3a8a" />
+                <Text style={styles.boardingLabel}>Status</Text>
+                <Text style={styles.boardingValue}>On Time</Text>
               </View>
             </View>
           </View>
@@ -209,21 +225,22 @@ export default function FlightDetailsScreen() {
           <View style={styles.baggageContainer}>
             <View style={styles.baggageCard}>
               <View style={styles.baggageHeader}>
-                <Ionicons name="bag-handle" size={24} color="#0ea5e9" />
-                <Text style={styles.baggageTitle}>Carry-on</Text>
+                <Ionicons name="bag-handle" size={24} color="#1e3a8a" />
+                <Text style={styles.baggageTitle}>Carry-On</Text>
               </View>
-              <Text style={styles.baggageText}>Dimensions: {baggageInfo.carryon.dimensions}</Text>
-              <Text style={styles.baggageText}>Weight: {baggageInfo.carryon.weight}</Text>
+              <Text style={styles.baggageText}>Max: 22" x 14" x 9"</Text>
+              <Text style={styles.baggageText}>Weight: Up to 15 lbs</Text>
+              <Text style={styles.baggageFee}>Included</Text>
             </View>
             
             <View style={styles.baggageCard}>
               <View style={styles.baggageHeader}>
-                <Ionicons name="bag" size={24} color="#0ea5e9" />
+                <Ionicons name="bag" size={24} color="#1e3a8a" />
                 <Text style={styles.baggageTitle}>Checked Bag</Text>
               </View>
-              <Text style={styles.baggageText}>Dimensions: {baggageInfo.checked.dimensions}</Text>
-              <Text style={styles.baggageText}>Weight: {baggageInfo.checked.weight}</Text>
-              <Text style={styles.baggageFee}>Fee: {baggageInfo.checked.fee}</Text>
+              <Text style={styles.baggageText}>Max: 28" x 18" x 10"</Text>
+              <Text style={styles.baggageText}>Weight: Up to 50 lbs</Text>
+              <Text style={styles.baggageFee}>$35 each way</Text>
             </View>
           </View>
         </View>
@@ -258,16 +275,59 @@ export default function FlightDetailsScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Airport Amenities</Text>
           <View style={styles.amenitiesGrid}>
-            {airportAmenities.map((amenity, index) => (
-              <View key={index} style={styles.amenityCard}>
-                <View style={styles.amenityIcon}>
-                  <Ionicons name={amenity.icon as any} size={24} color="#0ea5e9" />
-                </View>
-                <Text style={styles.amenityName}>{amenity.name}</Text>
-                <Text style={styles.amenityDescription}>{amenity.description}</Text>
-                <Text style={styles.amenityLocation}>{amenity.location}</Text>
+            <View style={styles.amenityCard}>
+              <View style={styles.amenityIcon}>
+                <Ionicons name="wifi" size={24} color="#1e3a8a" />
               </View>
-            ))}
+              <Text style={styles.amenityName}>WiFi</Text>
+              <Text style={styles.amenityDescription}>Complimentary internet access</Text>
+              <Text style={styles.amenityLocation}>Available throughout flight</Text>
+            </View>
+            
+            <View style={styles.amenityCard}>
+              <View style={styles.amenityIcon}>
+                <Ionicons name="restaurant" size={24} color="#1e3a8a" />
+              </View>
+              <Text style={styles.amenityName}>Dining</Text>
+              <Text style={styles.amenityDescription}>In-flight meal service</Text>
+              <Text style={styles.amenityLocation}>Galley - Row 15</Text>
+            </View>
+            
+            <View style={styles.amenityCard}>
+              <View style={styles.amenityIcon}>
+                <Ionicons name="tv" size={24} color="#1e3a8a" />
+              </View>
+              <Text style={styles.amenityName}>Entertainment</Text>
+              <Text style={styles.amenityDescription}>Seatback screens & streaming</Text>
+              <Text style={styles.amenityLocation}>Every seat</Text>
+            </View>
+            
+            <View style={styles.amenityCard}>
+              <View style={styles.amenityIcon}>
+                <Ionicons name="battery-charging" size={24} color="#1e3a8a" />
+              </View>
+              <Text style={styles.amenityName}>Power</Text>
+              <Text style={styles.amenityDescription}>USB & AC power outlets</Text>
+              <Text style={styles.amenityLocation}>Every row</Text>
+            </View>
+            
+            <View style={styles.amenityCard}>
+              <View style={styles.amenityIcon}>
+                <Ionicons name="storefront" size={24} color="#1e3a8a" />
+              </View>
+              <Text style={styles.amenityName}>Duty Free</Text>
+              <Text style={styles.amenityDescription}>Onboard shopping service</Text>
+              <Text style={styles.amenityLocation}>Mid-flight service</Text>
+            </View>
+            
+            <View style={styles.amenityCard}>
+              <View style={styles.amenityIcon}>
+                <Ionicons name="medical" size={24} color="#1e3a8a" />
+              </View>
+              <Text style={styles.amenityName}>Medical</Text>
+              <Text style={styles.amenityDescription}>First aid & assistance</Text>
+              <Text style={styles.amenityLocation}>Crew available</Text>
+            </View>
           </View>
         </View>
 
@@ -280,14 +340,14 @@ export default function FlightDetailsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#fdfaf6', // Ivory
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 20,
     paddingTop: 60,
-    backgroundColor: '#1e293b',
+    backgroundColor: '#333333', // Charcoal
     paddingBottom: 24,
   },
   backButton: {
@@ -299,12 +359,12 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 24,
     fontWeight: '800',
-    color: '#ffffff',
+    color: '#fdfaf6', // Ivory
     letterSpacing: -0.4,
   },
   headerSubtitle: {
     fontSize: 16,
-    color: '#cbd5e1',
+    color: '#e5c07b', // Champagne Gold
     fontWeight: '500',
   },
   statusBadge: {
@@ -313,7 +373,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   statusText: {
-    color: '#ffffff',
+    color: '#fdfaf6', // Ivory
     fontSize: 14,
     fontWeight: '600',
   },
@@ -322,16 +382,16 @@ const styles = StyleSheet.create({
   },
   routeCard: {
     margin: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 16,
     padding: 20,
-    shadowColor: '#1e293b',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 12,
     elevation: 4,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#e5c07b', // Champagne Gold
   },
   routeHeader: {
     flexDirection: 'row',
@@ -346,18 +406,18 @@ const styles = StyleSheet.create({
   airportCode: {
     fontSize: 28,
     fontWeight: '800',
-    color: '#1e293b',
+    color: '#333333', // Charcoal
     letterSpacing: -0.5,
   },
   cityName: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '500',
     marginTop: 4,
   },
   timeText: {
     fontSize: 16,
-    color: '#0ea5e9',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '700',
     marginTop: 8,
   },
@@ -370,7 +430,7 @@ const styles = StyleSheet.create({
   flightLine: {
     flex: 1,
     height: 2,
-    backgroundColor: '#cbd5e1',
+    backgroundColor: '#e5c07b', // Champagne Gold
   },
   planeIcon: {
     marginHorizontal: 8,
@@ -382,16 +442,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: '#f1f5f9',
+    borderTopColor: '#e5c07b', // Champagne Gold
   },
   duration: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '600',
   },
   aircraft: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '500',
   },
   section: {
@@ -401,21 +461,21 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#1e293b',
+    color: '#333333', // Charcoal
     marginBottom: 12,
     letterSpacing: -0.2,
   },
   boardingCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 20,
-    shadowColor: '#1e293b',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
     shadowRadius: 8,
     elevation: 3,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#e5c07b', // Champagne Gold
   },
   boardingRow: {
     flexDirection: 'row',
@@ -428,14 +488,14 @@ const styles = StyleSheet.create({
   },
   boardingLabel: {
     fontSize: 12,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '500',
     marginTop: 8,
     marginBottom: 4,
   },
   boardingValue: {
     fontSize: 16,
-    color: '#1e293b',
+    color: '#333333', // Charcoal
     fontWeight: '700',
   },
   baggageContainer: {
@@ -444,16 +504,16 @@ const styles = StyleSheet.create({
   },
   baggageCard: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
-    shadowColor: '#1e293b',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
     shadowRadius: 8,
     elevation: 3,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#e5c07b', // Champagne Gold
   },
   baggageHeader: {
     flexDirection: 'row',
@@ -464,17 +524,17 @@ const styles = StyleSheet.create({
   baggageTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#1e293b',
+    color: '#333333', // Charcoal
   },
   baggageText: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     marginBottom: 4,
     fontWeight: '500',
   },
   baggageFee: {
     fontSize: 14,
-    color: '#0ea5e9',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '700',
     marginTop: 4,
   },
@@ -483,7 +543,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     overflow: 'hidden',
     position: 'relative',
-    shadowColor: '#1e293b',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 12,
@@ -496,18 +556,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 16,
     left: 16,
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    backgroundColor: 'rgba(253, 250, 246, 0.95)', // Ivory with opacity
     borderRadius: 8,
     padding: 12,
   },
   mapTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#1e293b',
+    color: '#333333', // Charcoal
   },
   mapSubtitle: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '500',
   },
   amenitiesGrid: {
@@ -517,23 +577,23 @@ const styles = StyleSheet.create({
   },
   amenityCard: {
     width: '48%',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
-    shadowColor: '#1e293b',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.04,
     shadowRadius: 4,
     elevation: 2,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#e5c07b', // Champagne Gold
   },
   amenityIcon: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#f0f9ff',
+    backgroundColor: '#f5f3e7', // Light champagne
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 12,
@@ -541,20 +601,20 @@ const styles = StyleSheet.create({
   amenityName: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#1e293b',
+    color: '#333333', // Charcoal
     textAlign: 'center',
     marginBottom: 4,
   },
   amenityDescription: {
     fontSize: 12,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     textAlign: 'center',
     marginBottom: 4,
     fontWeight: '500',
   },
   amenityLocation: {
     fontSize: 11,
-    color: '#94a3b8',
+    color: '#1e3a8a', // Rich Navy
     textAlign: 'center',
     fontWeight: '500',
   },

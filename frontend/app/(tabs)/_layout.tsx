@@ -1,41 +1,33 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { HapticTab } from '@/components/HapticTab';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#0077b6', // TravelBuddy primary blue
-        tabBarInactiveTintColor: '#8a9ab0', // TravelBuddy muted color
+        tabBarActiveTintColor: '#1e3a8a', // Rich Navy
+        tabBarInactiveTintColor: '#b8860b', // Darker Gold
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            position: 'absolute',
-            backgroundColor: isDark ? '#1a1a1a' : '#ffffff',
-          },
-          default: {
-            backgroundColor: isDark ? '#1a1a1a' : '#ffffff',
-            borderTopColor: '#d0e0f0',
-          },
-        }),
+        tabBarStyle: {
+          backgroundColor: '#fdfaf6', // Ivory
+          borderTopColor: '#d4af37', // Professional Gold
+          borderTopWidth: 1,
+          height: 84,
+          paddingBottom: 20,
+          paddingTop: 8,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '600',
+        },
       }}>
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="map" size={size} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'home' : 'home-outline'} size={24} color={color} />
           ),
         }}
       />
@@ -43,17 +35,17 @@ export default function TabLayout() {
         name="destinations"
         options={{
           title: 'Destinations',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="location" size={size} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'location' : 'location-outline'} size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="flights"
+        name="Flights"
         options={{
           title: 'Flights',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="airplane" size={size} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'airplane' : 'airplane-outline'} size={24} color={color} />
           ),
         }}
       />
@@ -61,26 +53,8 @@ export default function TabLayout() {
         name="cruise"
         options={{
           title: 'Cruise',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="boat" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="chat"
-        options={{
-          title: 'Chat',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="chatbubbles" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person" size={size} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'boat' : 'boat-outline'} size={24} color={color} />
           ),
         }}
       />

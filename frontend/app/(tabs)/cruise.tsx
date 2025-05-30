@@ -109,58 +109,55 @@ export default function CruiseScreen() {
         {/* Cruise Search */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="boat" size={20} color="#004a77" />
-            <Text style={styles.sectionTitle}>Find My Cruise</Text>
+            <Ionicons name="boat" size={20} color="#1e3a8a" />
+            <Text style={styles.sectionTitle}>Find Your Cruise</Text>
           </View>
+          <Text style={styles.sectionSubtitle}>Enter your cruise ticket number or search by name</Text>
           
           <View style={styles.inputContainer}>
-            <Ionicons name="ticket" size={20} color="#0077b6" style={styles.inputIcon} />
+            <Ionicons name="ticket" size={20} color="#1e3a8a" style={styles.inputIcon} />
             <TextInput
               style={styles.textInput}
-              placeholder="Cruise Ticket Number (e.g., RC-2024-001)"
+              placeholder="Cruise ticket number (e.g., RC-2024-001)"
               value={cruiseTicketNumber}
               onChangeText={setCruiseTicketNumber}
-              placeholderTextColor="#64748b"
-              autoCapitalize="characters"
+              placeholderTextColor="#c4a966"
             />
           </View>
 
           <View style={styles.inputContainer}>
-            <Ionicons name="mail" size={20} color="#0077b6" style={styles.inputIcon} />
+            <Ionicons name="mail" size={20} color="#1e3a8a" style={styles.inputIcon} />
             <TextInput
               style={styles.textInput}
-              placeholder="Email (optional for verification)"
+              placeholder="Email (optional)"
               value={email}
               onChangeText={setEmail}
-              placeholderTextColor="#64748b"
               keyboardType="email-address"
-              autoCapitalize="none"
+              placeholderTextColor="#c4a966"
             />
           </View>
 
           <View style={styles.inputContainer}>
-            <Ionicons name="person" size={20} color="#0077b6" style={styles.inputIcon} />
+            <Ionicons name="person" size={20} color="#1e3a8a" style={styles.inputIcon} />
             <TextInput
               style={styles.textInput}
-              placeholder="Last Name (optional)"
+              placeholder="Last name (optional)"
               value={lastName}
               onChangeText={setLastName}
-              placeholderTextColor="#64748b"
-              autoCapitalize="words"
+              placeholderTextColor="#c4a966"
             />
           </View>
 
           <TouchableOpacity style={styles.searchButton} onPress={handleCruiseSearch}>
-            <Ionicons name="search" size={20} color="#ffffff" />
-            <Text style={styles.searchButtonText}>View My Cruise</Text>
-            <Ionicons name="boat" size={20} color="#ffffff" />
+            <Text style={styles.searchButtonText}>Search Cruise</Text>
+            <Ionicons name="search" size={20} color="#fdfaf6" />
           </TouchableOpacity>
         </View>
 
         {/* Quick Search Options */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="library" size={20} color="#004a77" />
+            <Ionicons name="library" size={20} color="#1e3a8a" />
             <Text style={styles.sectionTitle}>Demo Cruises</Text>
           </View>
           <Text style={styles.sectionSubtitle}>Popular cruise bookings for demonstration</Text>
@@ -174,7 +171,7 @@ export default function CruiseScreen() {
               >
                 <View style={styles.quickSearchHeader}>
                   <Text style={styles.ticketNumber}>{cruise.ticketNumber}</Text>
-                  <Ionicons name="chevron-forward" size={20} color="#64748b" />
+                  <Ionicons name="chevron-forward" size={20} color="#d4af37" />
                 </View>
                 <Text style={styles.cruiseLine}>{cruise.cruiseLine}</Text>
                 <Text style={styles.shipName}>{cruise.shipName}</Text>
@@ -187,14 +184,14 @@ export default function CruiseScreen() {
         {/* Features */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="checkmark-circle" size={20} color="#004a77" />
+            <Ionicons name="checkmark-circle" size={20} color="#1e3a8a" />
             <Text style={styles.sectionTitle}>What You'll Get</Text>
           </View>
           
           <View style={styles.featuresContainer}>
             <View style={styles.featureItem}>
-              <View style={[styles.featureIcon, { backgroundColor: '#e6f3ff' }]}>
-                <Ionicons name="boat" size={24} color="#0077b6" />
+              <View style={[styles.featureIcon, { backgroundColor: '#f5f3e7' }]}>
+                <Ionicons name="boat" size={24} color="#1e3a8a" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Cruise Overview</Text>
@@ -203,8 +200,8 @@ export default function CruiseScreen() {
             </View>
 
             <View style={styles.featureItem}>
-              <View style={[styles.featureIcon, { backgroundColor: '#e6f7ff' }]}>
-                <Ionicons name="location" size={24} color="#004a77" />
+              <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
+                <Ionicons name="location" size={24} color="#1e3a8a" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Port Schedule</Text>
@@ -213,8 +210,8 @@ export default function CruiseScreen() {
             </View>
 
             <View style={styles.featureItem}>
-              <View style={[styles.featureIcon, { backgroundColor: '#f0f9ff' }]}>
-                <Ionicons name="bed" size={24} color="#0077b6" />
+              <View style={[styles.featureIcon, { backgroundColor: '#f5f3e7' }]}>
+                <Ionicons name="bed" size={24} color="#1e3a8a" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Cabin Information</Text>
@@ -223,8 +220,8 @@ export default function CruiseScreen() {
             </View>
 
             <View style={styles.featureItem}>
-              <View style={[styles.featureIcon, { backgroundColor: '#e6f3ff' }]}>
-                <Ionicons name="restaurant" size={24} color="#004a77" />
+              <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
+                <Ionicons name="restaurant" size={24} color="#1e3a8a" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Dining Options</Text>
@@ -233,8 +230,8 @@ export default function CruiseScreen() {
             </View>
 
             <View style={styles.featureItem}>
-              <View style={[styles.featureIcon, { backgroundColor: '#f0f9ff' }]}>
-                <Ionicons name="storefront" size={24} color="#0077b6" />
+              <View style={[styles.featureIcon, { backgroundColor: '#f5f3e7' }]}>
+                <Ionicons name="storefront" size={24} color="#1e3a8a" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Onboard Shopping</Text>
@@ -243,8 +240,8 @@ export default function CruiseScreen() {
             </View>
 
             <View style={styles.featureItem}>
-              <View style={[styles.featureIcon, { backgroundColor: '#e6f7ff' }]}>
-                <Ionicons name="musical-notes" size={24} color="#004a77" />
+              <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
+                <Ionicons name="musical-notes" size={24} color="#1e3a8a" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Entertainment</Text>
@@ -283,7 +280,7 @@ export default function CruiseScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#fdfaf6', // Ivory
   },
   header: {
     paddingTop: 60,
@@ -291,10 +288,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   headerGradient: {
-    backgroundColor: '#0077b6',
+    backgroundColor: '#333333', // Charcoal
     borderRadius: 24,
     padding: 24,
-    shadowColor: '#004a77',
+    shadowColor: '#1e3a8a', // Rich Navy
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.3,
     shadowRadius: 16,
@@ -303,13 +300,13 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 28,
     fontWeight: '800',
-    color: '#ffffff',
+    color: '#fdfaf6', // Ivory
     marginBottom: 6,
     letterSpacing: -0.4,
   },
   headerSubtitle: {
     fontSize: 16,
-    color: '#d0e0f0',
+    color: '#d4af37', // Professional Gold
     fontWeight: '400',
     opacity: 0.9,
   },
@@ -325,28 +322,28 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#0077b6',
+    color: '#333333', // Charcoal
     marginLeft: 8,
   },
   sectionSubtitle: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     marginBottom: 16,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
-    shadowColor: '#0077b6',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
     shadowRadius: 8,
     elevation: 3,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#d4af37', // Professional Gold
   },
   inputIcon: {
     marginRight: 10,
@@ -354,18 +351,18 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     fontSize: 16,
-    color: '#334155',
+    color: '#333333', // Charcoal
     fontWeight: '500',
   },
   searchButton: {
-    backgroundColor: '#0077b6',
+    backgroundColor: '#1e3a8a', // Rich Navy
     borderRadius: 12,
     padding: 16,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
-    shadowColor: '#0077b6',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 12,
@@ -373,7 +370,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   searchButtonText: {
-    color: '#ffffff',
+    color: '#fdfaf6', // Ivory
     fontSize: 16,
     fontWeight: '700',
     letterSpacing: 0.3,
@@ -382,16 +379,16 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   quickSearchCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
-    shadowColor: '#0077b6',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
     shadowRadius: 8,
     elevation: 3,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#d4af37', // Professional Gold
   },
   quickSearchHeader: {
     flexDirection: 'row',
@@ -402,23 +399,23 @@ const styles = StyleSheet.create({
   ticketNumber: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#0077b6',
+    color: '#1e3a8a', // Rich Navy
   },
   cruiseLine: {
     fontSize: 14,
-    color: '#004a77',
+    color: '#333333', // Charcoal
     fontWeight: '600',
     marginBottom: 4,
   },
   shipName: {
     fontSize: 15,
-    color: '#1e293b',
+    color: '#333333', // Charcoal
     fontWeight: '600',
     marginBottom: 4,
   },
   route: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     fontWeight: '500',
   },
   featuresContainer: {
@@ -427,16 +424,16 @@ const styles = StyleSheet.create({
   featureItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdfaf6', // Ivory
     borderRadius: 12,
     padding: 16,
-    shadowColor: '#0077b6',
+    shadowColor: '#333333', // Charcoal
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.04,
     shadowRadius: 4,
     elevation: 2,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#e5c07b', // Champagne Gold
   },
   featureIcon: {
     width: 48,
@@ -452,12 +449,12 @@ const styles = StyleSheet.create({
   featureTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#0077b6',
+    color: '#333333', // Charcoal
     marginBottom: 4,
   },
   featureText: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#1e3a8a', // Rich Navy
     lineHeight: 20,
   },
   bottomSpacing: {
