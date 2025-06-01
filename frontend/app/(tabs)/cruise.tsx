@@ -190,7 +190,7 @@ export default function CruiseScreen() {
           
           <View style={styles.featuresContainer}>
             <View style={styles.featureItem}>
-              <View style={[styles.featureIcon, { backgroundColor: '#f5f3e7' }]}>
+              <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
                 <Ionicons name="boat" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
@@ -210,7 +210,7 @@ export default function CruiseScreen() {
             </View>
 
             <View style={styles.featureItem}>
-              <View style={[styles.featureIcon, { backgroundColor: '#f5f3e7' }]}>
+              <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
                 <Ionicons name="bed" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
@@ -230,7 +230,7 @@ export default function CruiseScreen() {
             </View>
 
             <View style={styles.featureItem}>
-              <View style={[styles.featureIcon, { backgroundColor: '#f5f3e7' }]}>
+              <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
                 <Ionicons name="storefront" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
@@ -250,8 +250,8 @@ export default function CruiseScreen() {
             </View>
 
             <View style={styles.featureItem}>
-              <View style={[styles.featureIcon, { backgroundColor: '#f0f9ff' }]}>
-                <Ionicons name="map" size={24} color="#0077b6" />
+              <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
+                <Ionicons name="map" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Live Ship Tracking</Text>
@@ -260,8 +260,8 @@ export default function CruiseScreen() {
             </View>
 
             <View style={styles.featureItem}>
-              <View style={[styles.featureIcon, { backgroundColor: '#e6f3ff' }]}>
-                <Ionicons name="call" size={24} color="#004a77" />
+              <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
+                <Ionicons name="call" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Onboard Services</Text>
