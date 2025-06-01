@@ -12,7 +12,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
-export default function FlightScreen() {
+export default function FlightsScreen() {
   const router = useRouter();
   const [flightNumber, setFlightNumber] = useState('');
   const [email, setEmail] = useState('');
@@ -83,43 +83,43 @@ export default function FlightScreen() {
         {/* Input Section */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="airplane" size={20} color="#1e3a8a" />
+            <Ionicons name="airplane" size={20} color="#333333" />
             <Text style={styles.sectionTitle}>Find Your Flight</Text>
           </View>
           <Text style={styles.sectionSubtitle}>Enter your flight number or search by details</Text>
           
           <View style={styles.inputContainer}>
-            <Ionicons name="airplane" size={20} color="#1e3a8a" style={styles.inputIcon} />
+            <Ionicons name="airplane" size={20} color="#333333" style={styles.inputIcon} />
             <TextInput
               style={styles.textInput}
               placeholder="Flight number (e.g., AA123, UA456)"
               value={flightNumber}
               onChangeText={setFlightNumber}
-              placeholderTextColor="#e5c07b"
+              placeholderTextColor="#6b7a99"
               autoCapitalize="characters"
             />
           </View>
 
           <View style={styles.inputContainer}>
-            <Ionicons name="mail" size={20} color="#1e3a8a" style={styles.inputIcon} />
+            <Ionicons name="mail" size={20} color="#333333" style={styles.inputIcon} />
             <TextInput
               style={styles.textInput}
               placeholder="Email (optional)"
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
-              placeholderTextColor="#e5c07b"
+              placeholderTextColor="#6b7a99"
             />
           </View>
 
           <View style={styles.inputContainer}>
-            <Ionicons name="person" size={20} color="#1e3a8a" style={styles.inputIcon} />
+            <Ionicons name="person" size={20} color="#333333" style={styles.inputIcon} />
             <TextInput
               style={styles.textInput}
               placeholder="Last name (optional)"
               value={lastName}
               onChangeText={setLastName}
-              placeholderTextColor="#e5c07b"
+              placeholderTextColor="#6b7a99"
             />
           </View>
 
@@ -132,7 +132,7 @@ export default function FlightScreen() {
         {/* Quick Search Options */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="library" size={20} color="#1e3a8a" />
+            <Ionicons name="library" size={20} color="#333333" />
             <Text style={styles.sectionTitle}>Demo Flights</Text>
           </View>
           <Text style={styles.sectionSubtitle}>Popular flight routes for demonstration</Text>
@@ -146,7 +146,7 @@ export default function FlightScreen() {
               >
                 <View style={styles.quickSearchHeader}>
                   <Text style={styles.flightNumber}>{flight.flightNumber}</Text>
-                  <Ionicons name="chevron-forward" size={20} color="#e5c07b" />
+                  <Ionicons name="chevron-forward" size={20} color="#d4af37" />
                 </View>
                 <Text style={styles.airline}>{flight.airline}</Text>
                 <Text style={styles.route}>{flight.route}</Text>
@@ -158,14 +158,14 @@ export default function FlightScreen() {
         {/* Features */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="checkmark-circle" size={20} color="#1e3a8a" />
+            <Ionicons name="checkmark-circle" size={20} color="#333333" />
             <Text style={styles.sectionTitle}>What You'll Get</Text>
           </View>
           
           <View style={styles.featuresContainer}>
             <View style={styles.featureItem}>
               <View style={[styles.featureIcon, { backgroundColor: '#f5f3e7' }]}>
-                <Ionicons name="airplane" size={24} color="#1e3a8a" />
+                <Ionicons name="airplane" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Real-time Status</Text>
@@ -175,7 +175,7 @@ export default function FlightScreen() {
 
             <View style={styles.featureItem}>
               <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
-                <Ionicons name="location" size={24} color="#1e3a8a" />
+                <Ionicons name="location" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Airport Information</Text>
@@ -185,7 +185,7 @@ export default function FlightScreen() {
 
             <View style={styles.featureItem}>
               <View style={[styles.featureIcon, { backgroundColor: '#f5f3e7' }]}>
-                <Ionicons name="bag" size={24} color="#1e3a8a" />
+                <Ionicons name="bag" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Baggage Information</Text>
@@ -195,7 +195,7 @@ export default function FlightScreen() {
 
             <View style={styles.featureItem}>
               <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
-                <Ionicons name="map" size={24} color="#1e3a8a" />
+                <Ionicons name="map" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Interactive Maps</Text>
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   },
   headerSubtitle: {
     fontSize: 16,
-    color: '#e5c07b', // Champagne Gold
+    color: '#d4af37', // Professional Gold
     fontWeight: '400',
     opacity: 0.9,
   },
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
     borderWidth: 1,
-    borderColor: '#e5c07b', // Champagne Gold
+    borderColor: '#d4af37', // Professional Gold
   },
   inputIcon: {
     marginRight: 10,
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
     borderWidth: 1,
-    borderColor: '#e5c07b', // Champagne Gold
+    borderColor: '#d4af37', // Professional Gold
   },
   quickSearchHeader: {
     flexDirection: 'row',

@@ -139,13 +139,13 @@ export default function DestinationsScreen() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Where to?</Text>
         <View style={styles.inputContainer}>
-          <Ionicons name="location" size={20} color="#1e3a8a" style={styles.inputIcon} />
+          <Ionicons name="location" size={20} color="#333333" style={styles.inputIcon} />
           <TextInput
             style={styles.textInput}
             placeholder="Enter destination (e.g., Paris, Tokyo, Bali)"
             value={destination}
             onChangeText={setDestination}
-            placeholderTextColor="#c4a966"
+            placeholderTextColor="#6b7a99"
           />
         </View>
       </View>
@@ -161,7 +161,7 @@ export default function DestinationsScreen() {
                 style={styles.budgetButton}
                 onPress={() => setBudget(Math.max(0, budget - 100))}
               >
-                <Ionicons name="remove" size={20} color="#1e3a8a" />
+                <Ionicons name="remove" size={20} color="#f5f3ef" />
               </TouchableOpacity>
               {isBudgetEditing ? (
                 <TextInput
@@ -181,7 +181,7 @@ export default function DestinationsScreen() {
                 >
                   <Text style={styles.budgetDisplay}>${budget}</Text>
                   <View style={styles.editIndicator}>
-                    <Ionicons name="pencil" size={12} color="#8b7355" />
+                    <Ionicons name="pencil" size={12} color="#333333" />
                   </View>
                 </TouchableOpacity>
               )}
@@ -189,7 +189,7 @@ export default function DestinationsScreen() {
                 style={styles.budgetButton}
                 onPress={() => setBudget(budget + 100)}
               >
-                <Ionicons name="add" size={20} color="#1e3a8a" />
+                <Ionicons name="add" size={20} color="#f5f3ef" />
               </TouchableOpacity>
             </View>
             <View style={styles.budgetRange}>
@@ -216,7 +216,7 @@ export default function DestinationsScreen() {
             style={styles.peopleButton}
             onPress={() => setNumberOfPeople(Math.max(1, numberOfPeople - 1))}
           >
-            <Ionicons name="remove" size={20} color="#1e3a8a" />
+            <Ionicons name="remove" size={20} color="#f5f3ef" />
           </TouchableOpacity>
           {isPeopleEditing ? (
             <TextInput
@@ -236,7 +236,7 @@ export default function DestinationsScreen() {
             >
               <Text style={styles.peopleCount}>{numberOfPeople}</Text>
               <View style={styles.editIndicator}>
-                <Ionicons name="pencil" size={12} color="#8b7355" />
+                <Ionicons name="pencil" size={12} color="#333333" />
               </View>
             </TouchableOpacity>
           )}
@@ -244,7 +244,7 @@ export default function DestinationsScreen() {
             style={styles.peopleButton}
             onPress={() => setNumberOfPeople(numberOfPeople + 1)}
           >
-            <Ionicons name="add" size={20} color="#1e3a8a" />
+            <Ionicons name="add" size={20} color="#f5f3ef" />
           </TouchableOpacity>
         </View>
       </View>
@@ -281,7 +281,7 @@ export default function DestinationsScreen() {
           style={styles.dateButton}
           onPress={() => setShowStartCalendar(!showStartCalendar)}
         >
-          <Ionicons name="calendar" size={20} color="#1e3a8a" />
+          <Ionicons name="calendar" size={20} color="#333333" />
           <Text style={styles.dateButtonText}>
             Start Date: {startDate ? startDate.toDateString() : 'Select start date'}
           </Text>
@@ -307,7 +307,7 @@ export default function DestinationsScreen() {
           style={styles.dateButton}
           onPress={() => setShowEndCalendar(!showEndCalendar)}
         >
-          <Ionicons name="calendar" size={20} color="#1e3a8a" />
+          <Ionicons name="calendar" size={20} color="#333333" />
           <Text style={styles.dateButtonText}>
             End Date: {endDate ? endDate.toDateString() : 'Select end date'}
           </Text>
@@ -334,7 +334,7 @@ export default function DestinationsScreen() {
       {/* Plan Trip Button */}
       <TouchableOpacity style={styles.planButton} onPress={handlePlanTrip}>
         <Text style={styles.planButtonText}>Plan My Trip</Text>
-        <Ionicons name="arrow-forward" size={20} color="#fdfaf6" />
+        <Ionicons name="arrow-forward" size={20} color="#f5f3ef" />
       </TouchableOpacity>
 
       <View style={styles.bottomSpacing} />
@@ -345,34 +345,34 @@ export default function DestinationsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fdfaf6', // Ivory
+    backgroundColor: '#f5f3ef', // Soft cream/ivory
   },
   headerSection: {
     padding: 20,
     paddingTop: 60,
     paddingBottom: 20,
-    backgroundColor: '#fdfaf6', // Ivory
+    backgroundColor: '#f5f3ef', // Soft cream/ivory
   },
   headerCard: {
     backgroundColor: '#333333', // Charcoal
     borderRadius: 24,
     padding: 24,
-    shadowColor: '#333333', // Charcoal
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.15,
     shadowRadius: 12,
-    elevation: 6,
+    elevation: 8,
   },
   headerTitle: {
     fontSize: 28,
     fontWeight: '800',
-    color: '#fdfaf6', // Ivory
+    color: '#ffffff', // White
     marginBottom: 6,
     letterSpacing: -0.4,
   },
   headerSubtitle: {
     fontSize: 16,
-    color: '#d4af37', // Professional Gold
+    color: '#d4af37', // Champagne gold
     fontWeight: '400',
     opacity: 0.9,
   },
@@ -383,23 +383,23 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#333333', // Charcoal
+    color: '#333333', // Charcoal for subtle contrast
     marginBottom: 12,
     letterSpacing: -0.2,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fdfaf6', // Ivory
+    backgroundColor: '#ffffff', // Pure white for input
     borderRadius: 12,
     padding: 16,
-    shadowColor: '#333333', // Charcoal
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
+    shadowOpacity: 0.08,
     shadowRadius: 8,
-    elevation: 3,
-    borderWidth: 1,
-    borderColor: '#d4af37', // Professional Gold
+    elevation: 4,
+    borderWidth: 1.5,
+    borderColor: '#d4af37', // Champagne gold border
   },
   inputIcon: {
     marginRight: 10,
@@ -407,27 +407,27 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     fontSize: 16,
-    color: '#333333', // Charcoal
+    color: '#1e3a8a', // Deep navy text
     fontWeight: '500',
   },
   budgetContainer: {
-    backgroundColor: '#fdfaf6', // Ivory
+    backgroundColor: '#ffffff', // Pure white
     borderRadius: 12,
     padding: 18,
-    shadowColor: '#333333', // Charcoal
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 3,
-    borderWidth: 1,
-    borderColor: '#d4af37', // Professional Gold
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    elevation: 4,
+    borderWidth: 1.5,
+    borderColor: '#d4af37', // Champagne gold border
   },
   budgetInputContainer: {
     alignItems: 'center',
   },
   budgetLabel: {
     fontSize: 14,
-    color: '#4a5568', // Blue-gray that complements navy
+    color: '#333333', // Charcoal
     fontWeight: '600',
     marginBottom: 12,
   },
@@ -440,10 +440,15 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#718096', // Muted blue-gray
+    backgroundColor: '#1e3a8a', // Deep navy
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   budgetTouchable: {
     flexDirection: 'row',
@@ -454,7 +459,7 @@ const styles = StyleSheet.create({
   budgetDisplay: {
     fontSize: 32,
     fontWeight: '800',
-    color: '#333333', // Charcoal
+    color: '#333333', // Charcoal for strong contrast
     marginHorizontal: 20,
     minWidth: 120,
     textAlign: 'center',
@@ -462,12 +467,12 @@ const styles = StyleSheet.create({
   budgetInput: {
     fontSize: 32,
     fontWeight: '800',
-    color: '#333333', // Charcoal
+    color: '#333333', // Charcoal for strong contrast
     marginHorizontal: 20,
     minWidth: 120,
     textAlign: 'center',
     borderBottomWidth: 2,
-    borderBottomColor: '#1e3a8a', // Rich Navy
+    borderBottomColor: '#d4af37', // Champagne gold
   },
   budgetRange: {
     flexDirection: 'row',
@@ -476,7 +481,7 @@ const styles = StyleSheet.create({
   },
   budgetRangeText: {
     fontSize: 12,
-    color: '#1e3a8a', // Rich Navy
+    color: '#1e3a8a', // Deep navy
     fontWeight: '500',
     width: 50,
     textAlign: 'center',
@@ -484,37 +489,42 @@ const styles = StyleSheet.create({
   budgetSliderTrack: {
     flex: 1,
     height: 4,
-    backgroundColor: '#e2e8f0', // Light blue-gray
+    backgroundColor: '#e8e4dd', // Light cream
     borderRadius: 2,
     marginHorizontal: 10,
   },
   budgetSliderFill: {
     height: 4,
-    backgroundColor: '#4a5568', // Darker blue-gray to match label
+    backgroundColor: '#d4af37', // Champagne gold
     borderRadius: 2,
   },
   peopleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fdfaf6', // Ivory
+    backgroundColor: '#ffffff', // Pure white
     borderRadius: 12,
     padding: 20,
-    shadowColor: '#333333', // Charcoal
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 3,
-    borderWidth: 1,
-    borderColor: '#d4af37', // Professional Gold
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    elevation: 4,
+    borderWidth: 1.5,
+    borderColor: '#d4af37', // Champagne gold border
   },
   peopleButton: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#718096', // Muted blue-gray
+    backgroundColor: '#1e3a8a', // Deep navy
     justifyContent: 'center',
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   peopleTouchable: {
     flexDirection: 'row',
@@ -525,7 +535,7 @@ const styles = StyleSheet.create({
   peopleCount: {
     fontSize: 36,
     fontWeight: '800',
-    color: '#333333', // Charcoal
+    color: '#333333', // Charcoal for strong contrast
     marginHorizontal: 30,
     minWidth: 60,
     textAlign: 'center',
@@ -533,12 +543,12 @@ const styles = StyleSheet.create({
   peopleCountInput: {
     fontSize: 36,
     fontWeight: '800',
-    color: '#333333', // Charcoal
+    color: '#333333', // Charcoal for strong contrast
     marginHorizontal: 30,
     minWidth: 60,
     textAlign: 'center',
     borderBottomWidth: 2,
-    borderBottomColor: '#1e3a8a', // Rich Navy
+    borderBottomColor: '#d4af37', // Champagne gold
   },
   editIndicator: {
     marginLeft: -8,
@@ -552,46 +562,51 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: '#fdfaf6', // Ivory
-    borderWidth: 1,
-    borderColor: '#d4af37', // Professional Gold
+    backgroundColor: '#ffffff', // Pure white
+    borderWidth: 1.5,
+    borderColor: '#d4af37', // Champagne gold border
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 2,
   },
   interestChipSelected: {
-    backgroundColor: '#1e3a8a', // Rich Navy
-    borderColor: '#1e3a8a', // Rich Navy
+    backgroundColor: '#d4af37', // Champagne gold fill
+    borderColor: '#d4af37', // Champagne gold border
   },
   interestText: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#333333', // Charcoal
+    color: '#1e3a8a', // Deep navy
   },
   interestTextSelected: {
-    color: '#fdfaf6', // Ivory
+    color: '#1e3a8a', // Keep navy for contrast on gold
   },
   dateButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fdfaf6', // Ivory
+    backgroundColor: '#ffffff', // Pure white
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
-    shadowColor: '#333333', // Charcoal
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.08,
     shadowRadius: 8,
-    elevation: 3,
-    borderWidth: 1,
-    borderColor: '#d4af37', // Professional Gold
+    elevation: 4,
+    borderWidth: 1.5,
+    borderColor: '#d4af37', // Champagne gold border
   },
   dateButtonText: {
     flex: 1,
     fontSize: 16,
-    color: '#333333', // Charcoal
+    color: '#1e3a8a', // Deep navy
     fontWeight: '500',
     marginLeft: 12,
   },
   planButton: {
-    backgroundColor: '#1e3a8a', // Rich Navy
+    backgroundColor: '#1e3a8a', // Deep navy
     borderRadius: 12,
     padding: 18,
     margin: 16,
@@ -599,14 +614,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
-    shadowColor: '#333333', // Charcoal
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 12,
-    elevation: 6,
+    elevation: 8,
   },
   planButtonText: {
-    color: '#fdfaf6', // Ivory
+    color: '#f5f3ef', // Cream/ivory text
     fontSize: 18,
     fontWeight: '700',
     letterSpacing: 0.3,

@@ -6,7 +6,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#1e3a8a', // Rich Navy
+        tabBarActiveTintColor: '#333333', // Charcoal
         tabBarInactiveTintColor: '#b8860b', // Darker Gold
         headerShown: false,
         tabBarStyle: {
@@ -41,7 +41,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="Flights"
+        name="flights"
         options={{
           title: 'Flights',
           tabBarIcon: ({ color, focused }) => (
@@ -52,7 +52,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="cruise"
         options={{
-          title: 'Cruise',
+          title: 'Cruises',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'boat' : 'boat-outline'} size={24} color={color} />
           ),

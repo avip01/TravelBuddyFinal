@@ -109,42 +109,42 @@ export default function CruiseScreen() {
         {/* Cruise Search */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="boat" size={20} color="#1e3a8a" />
+            <Ionicons name="boat" size={20} color="#333333" />
             <Text style={styles.sectionTitle}>Find Your Cruise</Text>
           </View>
           <Text style={styles.sectionSubtitle}>Enter your cruise ticket number or search by name</Text>
           
           <View style={styles.inputContainer}>
-            <Ionicons name="ticket" size={20} color="#1e3a8a" style={styles.inputIcon} />
+            <Ionicons name="ticket" size={20} color="#333333" style={styles.inputIcon} />
             <TextInput
               style={styles.textInput}
               placeholder="Cruise ticket number (e.g., RC-2024-001)"
               value={cruiseTicketNumber}
               onChangeText={setCruiseTicketNumber}
-              placeholderTextColor="#c4a966"
+              placeholderTextColor="#6b7a99"
             />
           </View>
 
           <View style={styles.inputContainer}>
-            <Ionicons name="mail" size={20} color="#1e3a8a" style={styles.inputIcon} />
+            <Ionicons name="mail" size={20} color="#333333" style={styles.inputIcon} />
             <TextInput
               style={styles.textInput}
               placeholder="Email (optional)"
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
-              placeholderTextColor="#c4a966"
+              placeholderTextColor="#6b7a99"
             />
           </View>
 
           <View style={styles.inputContainer}>
-            <Ionicons name="person" size={20} color="#1e3a8a" style={styles.inputIcon} />
+            <Ionicons name="person" size={20} color="#333333" style={styles.inputIcon} />
             <TextInput
               style={styles.textInput}
               placeholder="Last name (optional)"
               value={lastName}
               onChangeText={setLastName}
-              placeholderTextColor="#c4a966"
+              placeholderTextColor="#6b7a99"
             />
           </View>
 
@@ -157,7 +157,7 @@ export default function CruiseScreen() {
         {/* Quick Search Options */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="library" size={20} color="#1e3a8a" />
+            <Ionicons name="library" size={20} color="#333333" />
             <Text style={styles.sectionTitle}>Demo Cruises</Text>
           </View>
           <Text style={styles.sectionSubtitle}>Popular cruise bookings for demonstration</Text>
@@ -184,14 +184,14 @@ export default function CruiseScreen() {
         {/* Features */}
         <View style={styles.section}>
           <View style={styles.sectionTitleContainer}>
-            <Ionicons name="checkmark-circle" size={20} color="#1e3a8a" />
+            <Ionicons name="checkmark-circle" size={20} color="#333333" />
             <Text style={styles.sectionTitle}>What You'll Get</Text>
           </View>
           
           <View style={styles.featuresContainer}>
             <View style={styles.featureItem}>
               <View style={[styles.featureIcon, { backgroundColor: '#f5f3e7' }]}>
-                <Ionicons name="boat" size={24} color="#1e3a8a" />
+                <Ionicons name="boat" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Cruise Overview</Text>
@@ -201,7 +201,7 @@ export default function CruiseScreen() {
 
             <View style={styles.featureItem}>
               <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
-                <Ionicons name="location" size={24} color="#1e3a8a" />
+                <Ionicons name="location" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Port Schedule</Text>
@@ -211,7 +211,7 @@ export default function CruiseScreen() {
 
             <View style={styles.featureItem}>
               <View style={[styles.featureIcon, { backgroundColor: '#f5f3e7' }]}>
-                <Ionicons name="bed" size={24} color="#1e3a8a" />
+                <Ionicons name="bed" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Cabin Information</Text>
@@ -221,7 +221,7 @@ export default function CruiseScreen() {
 
             <View style={styles.featureItem}>
               <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
-                <Ionicons name="restaurant" size={24} color="#1e3a8a" />
+                <Ionicons name="restaurant" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Dining Options</Text>
@@ -231,7 +231,7 @@ export default function CruiseScreen() {
 
             <View style={styles.featureItem}>
               <View style={[styles.featureIcon, { backgroundColor: '#f5f3e7' }]}>
-                <Ionicons name="storefront" size={24} color="#1e3a8a" />
+                <Ionicons name="storefront" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Onboard Shopping</Text>
@@ -241,7 +241,7 @@ export default function CruiseScreen() {
 
             <View style={styles.featureItem}>
               <View style={[styles.featureIcon, { backgroundColor: '#f0f4f8' }]}>
-                <Ionicons name="musical-notes" size={24} color="#1e3a8a" />
+                <Ionicons name="musical-notes" size={24} color="#333333" />
               </View>
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Entertainment</Text>

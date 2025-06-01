@@ -203,7 +203,7 @@ export default function HomeScreen() {
         <Ionicons 
           name={filter.icon as any} 
           size={20} 
-          color={isActive ? '#fdfaf6' : '#1e3a8a'} 
+          color={isActive ? '#fdfaf6' : '#333333'} 
         />
         <Text style={[styles.filterText, isActive && styles.filterTextActive]}>
           {filter.label}
@@ -212,7 +212,7 @@ export default function HomeScreen() {
           <Ionicons 
             name={isExpanded ? 'chevron-up' : 'chevron-down'} 
             size={14} 
-            color={isActive ? '#fdfaf6' : '#1e3a8a'} 
+            color={isActive ? '#fdfaf6' : '#333333'} 
           />
         )}
       </TouchableOpacity>
