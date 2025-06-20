@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Calendar } from 'react-native-calendars';
@@ -18,11 +20,97 @@ const INTEREST_OPTIONS = [
   'Art', 'Photography', 'Shopping', 'Relaxation', 'Sports', 'Music'
 ];
 
+interface CityOption {
+  name: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+  displayName: string;
+}
+
+// OpenStreetMap Nominatim API integration with fallback strategies
+const searchCitiesAPI = async (query: string): Promise<CityOption[]> => {
+  if (query.length < 2) {
+    return [];
+  }
+
+  // Try multiple search strategies
+  const searchStrategies = [
+    // Strategy 1: Basic search
+    `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=10&accept-language=en`,
+    
+    // Strategy 2: Search with city classification
+    `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=10&class=place&type=city&accept-language=en`,
+    
+    // Strategy 3: Search as administrative area
+    `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=10&class=boundary&type=administrative&accept-language=en`,
+  ];
+
+  for (const url of searchStrategies) {
+    try {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        continue; // Try next strategy
+      }
+
+      const data = await response.json();
+      console.log('API Response for query:', query, data); // Debug log
+      
+      const results = data
+        .filter((item: any) => {
+          // Very permissive filtering - accept almost anything with coordinates
+          const hasCoordinates = item.lat && item.lon;
+          const hasName = item.name || item.display_name;
+          
+          return hasCoordinates && hasName;
+        })
+        .map((item: any) => {
+          const nameParts = item.display_name.split(',');
+          const cityName = item.name || nameParts[0].trim();
+          let country = 'Unknown';
+          
+          // Try multiple ways to get country
+          if (item.address?.country) {
+            country = item.address.country;
+          } else if (nameParts.length > 1) {
+            country = nameParts[nameParts.length - 1].trim();
+          }
+          
+          return {
+            name: cityName,
+            country: country,
+            latitude: parseFloat(item.lat),
+            longitude: parseFloat(item.lon),
+            displayName: item.display_name,
+          };
+        })
+        .slice(0, 8); // Limit to 8 results
+
+      if (results.length > 0) {
+        return results; // Return first successful result set
+      }
+    } catch (error) {
+      console.error('Error with search strategy:', url, error);
+      continue; // Try next strategy
+    }
+  }
+
+  // If all strategies fail, return empty array
+  console.log('All search strategies failed for query:', query);
+  return [];
+};
+
 export default function DestinationsScreen() {
   const router = useRouter();
   const { updateTripData, currentTrip } = useTripPlanningStore();
   
   const [destination, setDestination] = useState(currentTrip?.destination || '');
+  const [selectedCity, setSelectedCity] = useState<CityOption | null>(null);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [citySuggestions, setCitySuggestions] = useState<CityOption[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchTimeout, setSearchTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
   const [budget, setBudget] = useState(currentTrip?.budget || 0);
   const [budgetInputValue, setBudgetInputValue] = useState(`${currentTrip?.budget || 0}`);
   const [selectedInterests, setSelectedInterests] = useState<string[]>(currentTrip?.interests || []);
@@ -34,6 +122,67 @@ export default function DestinationsScreen() {
   const [endDate, setEndDate] = useState<Date | null>(currentTrip?.endDate || null);
   const [isBudgetEditing, setIsBudgetEditing] = useState(false);
   const [isPeopleEditing, setIsPeopleEditing] = useState(false);
+
+  // Cleanup function for search timeout
+  useEffect(() => {
+    return () => {
+      if (searchTimeout) {
+        clearTimeout(searchTimeout);
+      }
+    };
+  }, [searchTimeout]);
+
+  const searchCities = async (query: string) => {
+    if (query.length < 2) {
+      setCitySuggestions([]);
+      setShowSuggestions(false);
+      setIsSearching(false);
+      return;
+    }
+
+    setIsSearching(true);
+    
+    // Clear existing timeout
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+    }
+
+    // Debounce the search to avoid too many API calls
+    const timeout = setTimeout(async () => {
+      try {
+        const cities = await searchCitiesAPI(query);
+        setCitySuggestions(cities);
+        setShowSuggestions(cities.length > 0);
+      } catch (error) {
+        console.error('Search error:', error);
+        setCitySuggestions([]);
+        setShowSuggestions(false);
+      } finally {
+        setIsSearching(false);
+      }
+    }, 500); // 500ms delay
+
+    setSearchTimeout(timeout);
+  };
+
+  const handleDestinationChange = (text: string) => {
+    setDestination(text);
+    setSelectedCity(null);
+    searchCities(text);
+  };
+
+  const selectCity = (city: CityOption) => {
+    setDestination(city.name);
+    setSelectedCity(city);
+    setShowSuggestions(false);
+    setCitySuggestions([]);
+    setIsSearching(false);
+    
+    // Clear any pending search
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+    }
+  };
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests(prev => 
@@ -94,17 +243,35 @@ export default function DestinationsScreen() {
       return;
     }
 
-    // Mock coordinates for demo - in real app, you'd geocode the destination
-    const mockCoordinates = {
-      'Paris': { latitude: 48.8566, longitude: 2.3522 },
-      'Tokyo': { latitude: 35.6762, longitude: 139.6503 },
-      'New York': { latitude: 40.7128, longitude: -74.0060 },
-      'London': { latitude: 51.5074, longitude: -0.1278 },
-      'Bali': { latitude: -8.3405, longitude: 115.0920 },
-    };
-
-    const coordinates = mockCoordinates[destination as keyof typeof mockCoordinates] || 
-                       { latitude: 0, longitude: 0 };
+    // Get coordinates from selected city or search for it using API
+    let coordinates = { latitude: 0, longitude: 0 };
+    
+    if (selectedCity) {
+      coordinates = { latitude: selectedCity.latitude, longitude: selectedCity.longitude };
+    } else {
+      // Try to find the city using the API
+      try {
+        const cities = await searchCitiesAPI(destination);
+        if (cities.length > 0) {
+          const foundCity = cities[0]; // Use the first/best result
+          coordinates = { latitude: foundCity.latitude, longitude: foundCity.longitude };
+        } else {
+          Alert.alert(
+            'City Not Found', 
+            `We couldn't find "${destination}". Please try selecting from the search suggestions or use a different city name.`,
+            [{ text: 'OK' }]
+          );
+          return;
+        }
+      } catch (error) {
+        Alert.alert(
+          'Search Error', 
+          'Unable to find city coordinates. Please check your internet connection and try again.',
+          [{ text: 'OK' }]
+        );
+        return;
+      }
+    }
 
     const tripData: TripPlanningData = {
       destination,
@@ -142,12 +309,67 @@ export default function DestinationsScreen() {
           <Ionicons name="location" size={20} color="#333333" style={styles.inputIcon} />
           <TextInput
             style={styles.textInput}
-            placeholder="Enter destination (e.g., Paris, Tokyo, Bali)"
+            placeholder="Enter any city worldwide..."
             value={destination}
-            onChangeText={setDestination}
+            onChangeText={handleDestinationChange}
             placeholderTextColor="#6b7a99"
+            onBlur={() => {
+              // Hide suggestions after a brief delay to allow for selection
+              setTimeout(() => setShowSuggestions(false), 200);
+            }}
+            onFocus={() => {
+              // Show suggestions if there's text and suggestions available
+              if (destination.length >= 2 && citySuggestions.length > 0) {
+                setShowSuggestions(true);
+              }
+            }}
           />
+          {selectedCity && (
+            <View style={styles.selectedIndicator}>
+              <Ionicons name="checkmark-circle" size={20} color="#e5c07b" />
+            </View>
+          )}
+          {isSearching && (
+            <View style={styles.loadingIndicator}>
+              <ActivityIndicator size="small" color="#1e3a8a" />
+            </View>
+          )}
         </View>
+
+        {/* City Suggestions */}
+        {(showSuggestions && citySuggestions.length > 0) && (
+          <View style={styles.suggestionsContainer}>
+            <FlatList
+              data={citySuggestions}
+              keyExtractor={(item) => `${item.latitude}-${item.longitude}-${item.name}`}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.suggestionItem}
+                  onPress={() => selectCity(item)}
+                  activeOpacity={0.7}
+                >
+                  <View style={styles.suggestionContent}>
+                    <Ionicons name="location-outline" size={16} color="#1e3a8a" style={styles.suggestionIcon} />
+                    <View style={styles.suggestionTextContainer}>
+                      <Text style={styles.suggestionText}>{item.name}</Text>
+                      <Text style={styles.suggestionCountry}>{item.country}</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              )}
+              nestedScrollEnabled={true}
+              scrollEnabled={false}
+              style={styles.suggestionsList}
+            />
+          </View>
+        )}
+
+        {/* No results message */}
+        {destination.length >= 2 && !isSearching && !showSuggestions && citySuggestions.length === 0 && (
+          <View style={styles.noResultsContainer}>
+            <Text style={styles.noResultsText}>No cities found. Try a different search term.</Text>
+          </View>
+        )}
       </View>
 
       {/* Budget Selection */}
@@ -410,6 +632,12 @@ const styles = StyleSheet.create({
     color: '#1e3a8a', // Deep navy text
     fontWeight: '500',
   },
+  selectedIndicator: {
+    marginLeft: 8,
+  },
+  loadingIndicator: {
+    marginLeft: 8,
+  },
   budgetContainer: {
     backgroundColor: '#ffffff', // Pure white
     borderRadius: 12,
@@ -628,5 +856,66 @@ const styles = StyleSheet.create({
   },
   bottomSpacing: {
     height: 30,
+  },
+  suggestionsContainer: {
+    backgroundColor: '#ffffff', // Pure white
+    borderRadius: 12,
+    marginTop: 8,
+    marginHorizontal: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
+    maxHeight: 200,
+  },
+  suggestionsList: {
+    flexGrow: 0,
+  },
+  suggestionItem: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5c07b20', // Light champagne gold border
+  },
+  suggestionContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  suggestionIcon: {
+    marginRight: 8,
+  },
+  suggestionTextContainer: {
+    flex: 1,
+  },
+  suggestionText: {
+    fontSize: 16,
+    color: '#333333', // Charcoal
+    fontWeight: '600',
+  },
+  suggestionCountry: {
+    fontSize: 14,
+    color: '#1e3a8a', // Rich navy
+    fontWeight: '400',
+    opacity: 0.8,
+  },
+  noResultsContainer: {
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    marginTop: 8,
+    marginHorizontal: 16,
+    padding: 16,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  noResultsText: {
+    fontSize: 14,
+    color: '#333333',
+    fontWeight: '500',
+    opacity: 0.7,
   },
 }); 
