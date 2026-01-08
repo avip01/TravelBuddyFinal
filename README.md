@@ -2,7 +2,7 @@
 
 TravelBuddy is a location-based travel companion app designed to help users discover destinations, connect with like-minded travelers, and get curated recommendations for dining, entertainment, and local experiences.
 
-## 🚀 Features
+## Features
 
 - **Location-based recommendations** with Google Maps integration
 - **Social matching** with fellow travelers
@@ -11,7 +11,7 @@ TravelBuddy is a location-based travel companion app designed to help users disc
 - **Trip planner** with saved preferences
 - **User verification** and profile management
 
-## 🏗️ Architecture
+## Architecture
 
 ### Frontend
 - **React Native** + Expo
@@ -27,7 +27,7 @@ TravelBuddy is a location-based travel companion app designed to help users disc
 - **Firebase Authentication**
 - **AWS S3** for file storage
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 TravelBuddy/
@@ -38,7 +38,7 @@ TravelBuddy/
 └── docs/              # Documentation
 ```
 
-## 🎨 Design System
+## Design System
 
 **Color Palette:**
 - Primary Blue: `#0077b6`
@@ -47,7 +47,7 @@ TravelBuddy/
 - Dark Blue: `#004a77`
 - Muted Blue: `#8a9ab0`
 
-## 🛠️ Getting Started
+## Getting Started
 
 ### Prerequisites
 - Node.js 18+
@@ -94,7 +94,7 @@ cd backend && npm run dev
 cd frontend && npm start
 ```
 
-## 📱 Development
+## Development
 
 ### Backend API
 - Base URL: `http://localhost:3000/api`
@@ -104,7 +104,7 @@ cd frontend && npm start
 - Metro bundler: `http://localhost:8081`
 - Expo Dev Tools: `http://localhost:19002`
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Backend tests
@@ -114,19 +114,19 @@ cd backend && npm test
 cd frontend && npm test
 ```
 
-## 🚀 Deployment
+## Deployment
 
 The app is configured for deployment on:
 - **Backend**: Render/Vercel
 - **Frontend**: Expo Application Services (EAS)
 
-## 📊 Monitoring
+## Monitoring
 
 - **Error Tracking**: Sentry
 - **Analytics**: Mixpanel/Amplitude
 - **Performance**: Expo dev tools
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -134,6 +134,6 @@ The app is configured for deployment on:
 4. Add tests
 5. Submit a pull request
 
-## 📄 License
+## License
 
 MIT License - see LICENSE file for details
